@@ -72,6 +72,28 @@ Simplemente pásale el enlace de este repositorio a tu IA favorita y dile:
 
 ---
 
+## 🛠️ Herramientas de Automatización Multiplataforma
+
+El Tridente incluye scripts interactivos que te permiten inicializar un proyecto local en segundos sin necesidad de pedírselo a una IA. Al ejecutarlos, te harán las preguntas clave y generarán los 3 archivos base.
+
+### Para usuarios de Windows (PowerShell)
+Abre tu consola de PowerShell en la carpeta de tu nuevo proyecto y ejecuta:
+```powershell
+.\init-tridente.ps1
+```
+
+### Para usuarios de Linux / macOS / WSL (Bash)
+Abre tu terminal en la carpeta de tu nuevo proyecto, dale permisos de ejecución y lanza el script:
+```bash
+chmod +x init-tridente.sh
+./init-tridente.sh
+```
+
+### Guía para Agentes Autónomos (`AGENTS.md`)
+Dentro del repositorio encontrarás un archivo `AGENTS.md` escrito en inglés. Cópialo en la raíz de cualquier proyecto junto a tu Tridente. Este archivo actúa como un escudo protector: cuando cualquier IA entre al proyecto, leerá ese archivo e inmediatamente sabrá cómo comportarse, asegurando que no rompa el contexto.
+
+---
+
 <div align="center">
   <p>Construida por cyberdark by whoami-labs para la comunidad</p>
   <p><b>"Potenciando el desarrollo con Inteligencia Artificial"</b></p>
