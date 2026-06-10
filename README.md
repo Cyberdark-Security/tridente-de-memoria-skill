@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="banner.png" alt="Tridente de Memoria" width="100%">
+  <img src="banner.png" alt="Tridente de Memoria" width="50%">
   <br><br>
   
   <b>persistent memory architecture · context synchronization · ai agents</b>
