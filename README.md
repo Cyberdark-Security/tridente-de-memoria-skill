@@ -74,5 +74,6 @@ Simplemente pásale el enlace de este repositorio a tu IA favorita y dile:
 
 <div align="center">
   <p>Construida por cyberdark by whoami-labs para la comunidad</p>
-  <p><i>"Potenciando el desarrollo con Inteligencia Artificial"</i></p>
+  <p><b>"Potenciando el desarrollo con Inteligencia Artificial"</b></p>
+  <p><i>"la IA potencializa el conocimiento a un 1000 %, donde el limite es tu mente"</i></p>
 </div>
