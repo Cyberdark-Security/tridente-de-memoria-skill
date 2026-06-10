@@ -15,7 +15,7 @@
 
 ---
 
-## 🚀 ¿Qué es el Tridente de Memoria?
+## ¿Qué es el Tridente de Memoria?
 
 Convierte a tu Inteligencia Artificial de un simple "asistente de código" a un verdadero **Arquitecto de Software** que mantiene el contexto global del proyecto a largo plazo. 
 
@@ -27,7 +27,7 @@ Resuelve el mayor problema del desarrollo asistido por IA: **La pérdida de cont
 
 ---
 
-## 🧠 Características Principales
+## Características Principales
 
 | ⚡ Característica | 🎯 Descripción |
 | :--- | :--- |
@@ -38,7 +38,7 @@ Resuelve el mayor problema del desarrollo asistido por IA: **La pérdida de cont
 
 ---
 
-## 📖 Anatomía del Tridente
+## Anatomía del Tridente
 
 El sistema se compone de **3 Archivos Maestros**:
 
@@ -53,7 +53,7 @@ El sistema se compone de **3 Archivos Maestros**:
 
 ---
 
-## 🛠️ Instalación en tu Ecosistema
+## Instalación en tu Ecosistema
 
 <details open>
 <summary><b>Haz clic aquí para ver las instrucciones</b></summary>
