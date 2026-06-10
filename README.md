@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="banner.png" alt="Tridente de Memoria" width="50%">
+  <img src="banner.png" alt="Tridente de Memoria" width="100%">
   <br><br>
   
   <img src="https://img.shields.io/badge/WHOAMI--LABS-000000?style=for-the-badge&logo=hackerone&logoColor=00FFFF" alt="Whoami Labs Badge" />
