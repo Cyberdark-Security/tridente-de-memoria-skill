@@ -2,47 +2,77 @@
   <img src="banner.png" alt="Tridente de Memoria" width="50%">
   <br><br>
   
-  <b>arquitectura de memoria persistente · sincronización de contexto · agentes de ia</b>
-  <br><br>
+  <img src="https://img.shields.io/badge/WHOAMI--LABS-000000?style=for-the-badge&logo=hackerone&logoColor=00FFFF" alt="Whoami Labs Badge" />
+  <img src="https://img.shields.io/badge/AI_AGENT_SKILL-FF0000?style=for-the-badge&logo=anthropic&logoColor=white" alt="AI Agent Badge" />
+  
+  <h1>🔱 Tridente de Memoria (Memory Trident)</h1>
+  <p><strong>El sistema definitivo de memoria persistente para Agentes de IA</strong></p>
 
-  <a href="https://whoami-labs.com"><img src="https://img.shields.io/badge/whoami--labs-black?style=for-the-badge&logo=hackerone&logoColor=white"></a>
-  <a href="#"><img src="https://img.shields.io/badge/gemini-black?style=for-the-badge&logo=googlebard&logoColor=white"></a>
-  <a href="#"><img src="https://img.shields.io/badge/claude-black?style=for-the-badge&logo=anthropic&logoColor=white"></a>
-  <a href="#"><img src="https://img.shields.io/badge/chatgpt-black?style=for-the-badge&logo=openai&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/ChatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white"></a>
 </div>
 
-<br/>
-<hr style="border: 1px solid #333;" />
-<br/>
+---
 
-adiós a la pérdida de contexto. diferente agente, mismo cerebro.
+## 🚀 ¿Qué es el Tridente de Memoria?
 
-tridente-de-memoria es un protocolo de memoria persistente independiente para agentes autónomos de ia.
+Convierte a tu Inteligencia Artificial de un simple "asistente de código" a un verdadero **Arquitecto de Software** que mantiene el contexto global del proyecto a largo plazo. 
 
-**el problema.** los llms pierden contexto entre sesiones y reescriben código a ciegas sin entender la arquitectura a largo plazo. **la solución.** un sistema de 3 archivos sincronizados que el agente está obligado a leer antes de escribir una sola línea de código. **setup.** simplemente pídele al agente que inicialice el proyecto; te entrevistará y construirá la estructura automáticamente.
-
-<br/>
-
-### el tridente
-**1. gemini.md** — identidad, stack tecnológico y reglas innegociables.
-**2. plan_maestro.md** — hoja de ruta, sprints activos y bitácora de decisiones.
-**3. lecciones_aprendidas.md** — minas activas, problemas históricos y errores resueltos.
-
-<br/>
-
-### instalación
-
-clona este repositorio o descarga la carpeta `tridente-de-memoria` y cópiala en el directorio global de skills de tu entorno (ejemplo: `~/.gemini/config/skills/`). 
-
-**alternativa rápida:** también puedes simplemente pasarle el enlace de este repositorio a tu ia favorita y decirle: *"instala esta skill en tu entorno"*.
-
-en tu próximo chat, activa el sistema diciendo: *"inicia un proyecto nuevo usando el tridente de memoria"*.
-
-<br/>
-<hr style="border: 1px solid #333;" />
-<br/>
+Resuelve el mayor problema del desarrollo asistido por IA: **La pérdida de contexto.**
 
 <div align="center">
-  <p>construida por cyberdark by whoami-labs para la comunidad.</p>
-  <p><i>potenciando el desarrollo con inteligencia artificial</i></p>
+  <i>"Ningún agente escribirá una sola línea de código a ciegas. Jamás."</i>
+</div>
+
+---
+
+## 🧠 Características Principales
+
+| ⚡ Característica | 🎯 Descripción |
+| :--- | :--- |
+| **🛡️ Anti-Alucinaciones** | Obliga a la IA a leer las reglas y la arquitectura antes de tocar el código. |
+| **⚙️ Setup Inteligente (Fase 0)** | Entrevista inicial automática: La IA te pregunta cómo quieres el proyecto y crea la estructura. |
+| **📚 Aprendizaje Continuo** | Cada bug resuelto se documenta para que el agente *del futuro* no repita el error. |
+| **🔗 Sincronía Total** | Tres archivos markdown interconectados que actúan como un solo cerebro. |
+
+---
+
+## 📖 Anatomía del Tridente
+
+El sistema se compone de **3 Archivos Maestros**:
+
+> ### 1️⃣ `gemini.md` (El ADN)
+> 🧬 Contiene la identidad, el *stack tecnológico* y las **reglas innegociables** del proyecto.
+
+> ### 2️⃣ `plan_maestro.md` (La Brújula)
+> 🗺️ Define la hoja de ruta, los sprints activos, las tareas (TODO) y la **Bitácora de Decisiones**.
+
+> ### 3️⃣ `lecciones_aprendidas.md` (El Escudo)
+> 🛡️ Registra las *minas activas*, problemas históricos y bugs. **Para no volver a caer en ellos.**
+
+---
+
+## 🛠️ Instalación en tu Ecosistema
+
+<details open>
+<summary><b>Haz clic aquí para ver las instrucciones</b></summary>
+<br/>
+
+1. **Clona** este repositorio o descarga la carpeta `tridente-de-memoria`.
+2. **Cópiala** en el directorio global de *skills* de tu entorno (ejemplo: `~/.gemini/config/skills/`).
+3. En tu próximo chat, simplemente **activa el sistema** diciéndole a tu IA:
+   > *"Inicia un proyecto nuevo usando el Tridente de Memoria"*
+
+**Alternativa Rápida (Recomendada):**  
+Simplemente pásale el enlace de este repositorio a tu IA favorita y dile:  
+> *"Instala esta skill en tu directorio de memoria."*
+
+</details>
+
+---
+
+<div align="center">
+  <p>Construida por cyberdark by whoami-labs para la comunidad</p>
+  <p><i>"Potenciando el desarrollo con Inteligencia Artificial"</i></p>
 </div>
