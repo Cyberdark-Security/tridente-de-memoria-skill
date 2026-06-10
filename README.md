@@ -1,23 +1,71 @@
-# 🔱 Tridente de Memoria (Memory Trident Skill)
+<div align="center">
+  <img src="https://img.shields.io/badge/WHOAMI--LABS-000000?style=for-the-badge&logo=hackerone&logoColor=00FFFF" alt="Whoami Labs Badge" />
+  <img src="https://img.shields.io/badge/AI_AGENT_SKILL-FF0000?style=for-the-badge&logo=anthropic&logoColor=white" alt="AI Agent Badge" />
+  
+  <h1>🔱 Tridente de Memoria (Memory Trident)</h1>
+  <p><strong>El sistema definitivo de memoria persistente para Agentes de IA</strong></p>
 
-Una skill para agentes autónomos (Gemini, Claude, GPT) que implementa un sistema de **Memoria Persistente Compartida**. Convierte la IA de un simple asistente de código a un verdadero Arquitecto de Software que mantiene el contexto global del proyecto a largo plazo.
-
-## 🚀 ¿Qué hace esta Skill?
-Resuelve el mayor problema de las IAs al programar: **la pérdida de contexto**.
-Esta skill obliga al agente a:
-1. **No escribir código a ciegas:** El agente tiene prohibido modificar código sin leer antes el "Tridente" (3 archivos base).
-2. **Setup de Proyectos (Fase Cero):** Al inicializar un proyecto, la IA realiza una entrevista interactiva al desarrollador y crea la estructura base del proyecto automáticamente.
-3. **Aprendizaje Continuo:** Cada error se documenta y se cruza con las reglas globales para que el agente del futuro no vuelva a caer en la misma trampa.
-
-## 📖 El Tridente (Los 3 Archivos)
-1. `gemini.md` (o `rules.md`): Identidad, stack tecnológico y reglas innegociables.
-2. `plan_maestro.md`: Hoja de ruta, sprints activos y bitácora de decisiones.
-3. `lecciones_aprendidas.md`: Minas activas, problemas históricos y bugs.
-
-## 🛠️ Instalación en tu Ecosistema
-1. Clona este repositorio o descarga la carpeta `tridente-de-memoria`.
-2. Colócala en el directorio global de skills de tu agente IA (por ejemplo: `~/.gemini/config/skills/`).
-3. En tu próximo chat, simplemente dile a tu IA: *"Inicia este proyecto usando el Tridente de Memoria"*.
+  <a href="#"><img src="https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white"></a>
+  <a href="#"><img src="https://img.shields.io/badge/ChatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white"></a>
+</div>
 
 ---
-*Creado por la comunidad de Whoami-Labs para potenciar el desarrollo con Inteligencia Artificial.*
+
+## 🚀 ¿Qué es el Tridente de Memoria?
+
+Convierte a tu Inteligencia Artificial de un simple "asistente de código" a un verdadero **Arquitecto de Software** que mantiene el contexto global del proyecto a largo plazo. 
+
+Resuelve el mayor problema del desarrollo asistido por IA: **La pérdida de contexto.**
+
+<div align="center">
+  <i>"Ningún agente escribirá una sola línea de código a ciegas. Jamás."</i>
+</div>
+
+---
+
+## 🧠 Características Principales
+
+| ⚡ Característica | 🎯 Descripción |
+| :--- | :--- |
+| **🛡️ Anti-Alucinaciones** | Obliga a la IA a leer las reglas y la arquitectura antes de tocar el código. |
+| **⚙️ Setup Inteligente (Fase 0)** | Entrevista inicial automática: La IA te pregunta cómo quieres el proyecto y crea la estructura. |
+| **📚 Aprendizaje Continuo** | Cada bug resuelto se documenta para que el agente *del futuro* no repita el error. |
+| **🔗 Sincronía Total** | Tres archivos markdown interconectados que actúan como un solo cerebro. |
+
+---
+
+## 📖 Anatomía del Tridente
+
+El sistema se compone de **3 Archivos Maestros**:
+
+> ### 1️⃣ `gemini.md` (El ADN)
+> 🧬 Contiene la identidad, el *stack tecnológico* y las **reglas innegociables** del proyecto.
+
+> ### 2️⃣ `plan_maestro.md` (La Brújula)
+> 🗺️ Define la hoja de ruta, los sprints activos, las tareas (TODO) y la **Bitácora de Decisiones**.
+
+> ### 3️⃣ `lecciones_aprendidas.md` (El Escudo)
+> 🛡️ Registra las *minas activas*, problemas históricos y bugs. **Para no volver a caer en ellos.**
+
+---
+
+## 🛠️ Instalación en tu Ecosistema
+
+<details>
+<summary><b>Haz clic aquí para ver las instrucciones</b></summary>
+<br/>
+
+1. **Clona** este repositorio o descarga la carpeta `tridente-de-memoria`.
+2. **Cópiala** en el directorio global de *skills* de tu entorno (ejemplo: `~/.gemini/config/skills/`).
+3. En tu próximo chat, simplemente **activa el sistema** diciéndole a tu IA:
+   > *"Inicia un proyecto nuevo usando el Tridente de Memoria"*
+
+</details>
+
+---
+
+<div align="center">
+  <p>Construido con 💻 y ☕ por la comunidad de <b>Whoami-Labs</b></p>
+  <p><i>"Potenciando el desarrollo con Inteligencia Artificial"</i></p>
+</div>
