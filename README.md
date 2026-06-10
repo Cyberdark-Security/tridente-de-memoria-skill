@@ -2,7 +2,7 @@
   <img src="banner.png" alt="Tridente de Memoria" width="50%">
   <br><br>
   
-  <b>persistent memory architecture · context synchronization · ai agents</b>
+  <b>arquitectura de memoria persistente · sincronización de contexto · agentes de ia</b>
   <br><br>
 
   <a href="https://whoami-labs.com"><img src="https://img.shields.io/badge/whoami--labs-black?style=for-the-badge&logo=hackerone&logoColor=white"></a>
@@ -15,20 +15,34 @@
 <hr style="border: 1px solid #333;" />
 <br/>
 
-no more context loss. different agent, same brain.
+adiós a la pérdida de contexto. diferente agente, mismo cerebro.
 
-tridente-de-memoria is an independent persistent memory protocol for autonomous ai agents.
+tridente-de-memoria es un protocolo de memoria persistente independiente para agentes autónomos de ia.
 
-**the problem.** llms lose context across sessions and rewrite code blindly without understanding the long-term architecture. **the solution.** a synchronized 3-file system that the agent is forced to read before writing a single line of code. **setup.** simply ask the agent to initialize the project; it will interview you and build the structure autonomously.
-
-<br/>
-
-### the trident
-**1. gemini.md** — identity, tech stack, and non-negotiable rules.
-**2. plan_maestro.md** — roadmap, active sprints, and the decision log.
-**3. lecciones_aprendidas.md** — active landmines, historical bugs, and solved errors.
+**el problema.** los llms pierden contexto entre sesiones y reescriben código a ciegas sin entender la arquitectura a largo plazo. **la solución.** un sistema de 3 archivos sincronizados que el agente está obligado a leer antes de escribir una sola línea de código. **setup.** simplemente pídele al agente que inicialice el proyecto; te entrevistará y construirá la estructura automáticamente.
 
 <br/>
 
-### installation
-drop the `tridente-de-memoria` folder into your global AI skills directory (e.g., `~/.gemini/config/skills/`). on your next chat, trigger it: *"initialize this project using the memory trident"*.
+### el tridente
+**1. gemini.md** — identidad, stack tecnológico y reglas innegociables.
+**2. plan_maestro.md** — hoja de ruta, sprints activos y bitácora de decisiones.
+**3. lecciones_aprendidas.md** — minas activas, problemas históricos y errores resueltos.
+
+<br/>
+
+### instalación
+
+clona este repositorio o descarga la carpeta `tridente-de-memoria` y cópiala en el directorio global de skills de tu entorno (ejemplo: `~/.gemini/config/skills/`). 
+
+**alternativa rápida:** también puedes simplemente pasarle el enlace de este repositorio a tu ia favorita y decirle: *"instala esta skill en tu entorno"*.
+
+en tu próximo chat, activa el sistema diciendo: *"inicia un proyecto nuevo usando el tridente de memoria"*.
+
+<br/>
+<hr style="border: 1px solid #333;" />
+<br/>
+
+<div align="center">
+  <p>construida por cyberdark by whoami-labs para la comunidad.</p>
+  <p><i>potenciando el desarrollo con inteligencia artificial</i></p>
+</div>
