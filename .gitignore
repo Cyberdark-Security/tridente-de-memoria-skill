@@ -1,0 +1,21 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Session / temp
+jules_session/
+*.tmp
+*.bak
+
+# Secrets
+.env
+.env.*
+*.pem
+credentials.json

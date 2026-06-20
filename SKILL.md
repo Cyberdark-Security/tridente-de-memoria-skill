@@ -1,61 +1,123 @@
 ---
 name: tridente-de-memoria
-description: Sistema de memoria persistente basado en 3 archivos (plan_maestro, gemini/reglas, lecciones_aprendidas). Inicializa proyectos con una entrevista interactiva y se usa SIEMPRE antes de escribir código para mantener el contexto. Optimizado para Gemini y otros agentes autónomos.
+description: >
+  Sistema de memoria persistente basado en 3 archivos interconectados
+  (gemini.md, plan_maestro.md, lecciones_aprendidas.md). Inicializa proyectos
+  con entrevista interactiva (Fase Cero) y se usa SIEMPRE antes de escribir
+  código para mantener el contexto. Compatible con Cursor, Gemini, Claude,
+  ChatGPT y agentes autónomos.
 ---
 
 # 🔱 Tridente de Memoria (Memory Trident)
 
-Este skill define el protocolo de "Memoria Persistente Compartida", una metodología diseñada para inicializar proyectos y mantener el contexto de agentes de IA perfectamente sincronizado.
+Protocolo de **Memoria Persistente Compartida** para mantener el contexto de agentes de IA sincronizado a largo plazo.
 
-## 📖 El Concepto
-El Tridente está compuesto por 3 archivos interconectados que actúan como el cerebro del proyecto.
-**Regla de Oro: NINGÚN CÓDIGO SE ESCRIBE SIN ANTES LEER EL TRIDENTE.**
+## Cuándo usar este skill
 
-1. **El Archivo de Reglas (`gemini.md` u homólogo):** Identidad, stack tecnológico y reglas innegociables.
-2. **El Plan Maestro (`plan_maestro.md`):** Hoja de ruta, sprints activos y bitácora de decisiones.
-3. **Las Lecciones Aprendidas (`lecciones_aprendidas.md`):** Minas activas, problemas históricos y bugs.
+- El usuario pide **iniciar un proyecto nuevo** con memoria persistente
+- El usuario dice **"instala el Tridente"**, **"Memory Trident"** o similar
+- Vas a **modificar código** y existen (o deberían existir) los 3 archivos maestros
+- El usuario pregunta **cómo mantener contexto** entre sesiones de IA
+- Detectas que el proyecto **no tiene reglas documentadas** y el agente está "adivinando"
+
+## Regla de oro
+
+> **NINGÚN CÓDIGO SE ESCRIBE SIN ANTES LEER EL TRIDENTE.**
 
 ---
 
-## 🚀 Fase Cero: Inicialización (Setup del Proyecto)
+## Los 3 archivos maestros
 
-Si estás en un proyecto nuevo o el usuario te pide implementar/instalar el "Tridente de Memoria" y los archivos NO existen, **está estrictamente prohibido crearlos vacíos o inventar el proyecto.**
+| Archivo | Rol | Contenido |
+| :--- | :--- | :--- |
+| `gemini.md` | 🧬 El ADN | Identidad, stack, reglas innegociables, arquitectura |
+| `plan_maestro.md` | 🗺️ La Brújula | Roadmap, sprint activo, backlog, bitácora de decisiones |
+| `lecciones_aprendidas.md` | 🛡️ El Escudo | Minas activas, bugs históricos, conocimiento adquirido |
 
-Debes iniciar una **Entrevista Interactiva** con el usuario haciéndole estas preguntas clave (una por una o en un bloque claro):
+**Nota sobre nombres:** `gemini.md` es el nombre canónico, pero el archivo de ADN puede llamarse de otra forma en proyectos existentes (ej. `PROJECT_DNA.md`, `CLAUDE.md`). Identifícalo por su función, no solo por el nombre.
+
+---
+
+## Fase Cero: Inicialización
+
+Si los 3 archivos **NO existen**, está **estrictamente prohibido** crearlos vacíos o inventar el proyecto.
+
+### Opción 1 — Script (si tienes terminal)
+
+```bash
+# Unix
+./init-tridente.sh
+
+# Windows
+.\init-tridente.ps1
+```
+
+### Opción 2 — Entrevista interactiva
+
+Haz estas preguntas al usuario (una por una o en bloque claro):
+
 1. **¿Cuál es el objetivo principal del proyecto?**
-2. **¿Qué Stack Tecnológico vamos a utilizar?** (Frontend, Backend, Base de Datos, etc.)
-3. **¿Tienes alguna regla innegociable, límite de diseño o preferencia de infraestructura?**
-4. **¿Cuál sería el primer hito o sprint para empezar a trabajar?**
+2. **¿Qué stack tecnológico vamos a utilizar?** (Frontend, Backend, BD, infra)
+3. **¿Tienes reglas innegociables, límites de diseño o preferencias de infraestructura?**
+4. **¿Cuál sería el primer hito o sprint para empezar?**
 
-**Generación Automática:** Una vez que el usuario te responda, utilizarás esa información para **crear y poblar automáticamente** los tres archivos (`gemini.md`, `plan_maestro.md`, `lecciones_aprendidas.md` con su estructura inicial). ¡El proyecto nacerá con cerebro!
-
----
-
-## 🔒 Protocolo de Lectura (Durante el Desarrollo)
-
-Siempre que inicies un task o vayas a modificar código, ejecuta este protocolo:
-
-1. **Analiza el estado:** Lee los 3 archivos para saber dónde estás, qué límites tienes y qué errores no debes cometer.
-2. **Haz Preguntas:** Si el requerimiento es ambiguo, formula tus dudas al usuario ANTES de escribir una sola línea de código.
-3. **Sincroniza:** Usa las decisiones acordadas con el usuario para actualizar el tridente *antes* de proceder a programar.
+Con las respuestas, **crea y puebla** los 3 archivos usando las plantillas de `templates/` como base. Copia también `AGENTS.md` a la raíz del proyecto.
 
 ---
 
-## ✍️ Protocolo de Escritura y Actualización (El Orden Sagrado)
+## Protocolo de lectura
 
-Los archivos deben mantenerse **interconectados**. Si hay un cambio arquitectónico, un bug resuelto o una decisión clave, el orden de actualización es ESTRICTO para no perder la coherencia:
+Antes de cada tarea o modificación de código:
 
-1. **PRIMERO - `lecciones_aprendidas.md`:** 
-   - Documenta el fallo o la lección técnica. *¿Por qué?* Para que el agente del futuro no vuelva a caer en la trampa.
-
-2. **SEGUNDO - Archivo de Reglas (`gemini.md`):**
-   - Modifica este archivo **SOLO** si la lección aprendida altera las reglas globales, el stack, los comandos o las directrices de diseño.
-
-3. **TERCERO - `plan_maestro.md`:**
-   - Marca la tarea relacionada como completada `[x]`.
-   - Registra la decisión tomada en la sección de **Bitácora de Decisiones** vinculando lógicamente a los otros archivos.
+1. **Lee los 3 archivos** — Entiende dónde estás, qué límites hay y qué errores evitar
+2. **Pregunta si hay ambigüedad** — No asumas; consulta al usuario
+3. **Sincroniza** — Si hay decisiones pendientes, actualiza el tridente *antes* de programar
 
 ---
 
-## 🔗 Regla de Interconexión
-No trates a los archivos como entidades aisladas. Si en el `plan_maestro.md` se toma una decisión de diseño, asegúrate de que `gemini.md` refleje ese cambio en su identidad; y si la implementación tiene trampas de código, crúzalas con `lecciones_aprendidas.md`. Todo es un solo organismo.
+## Protocolo de escritura (orden sagrado)
+
+Cuando hay un cambio arquitectónico, bug resuelto o decisión clave:
+
+### 1. PRIMERO → `lecciones_aprendidas.md`
+
+Documenta el fallo o lección técnica. El agente del futuro no debe caer en la misma trampa.
+
+```markdown
+### [Fecha] - [Título]
+- **Problema:** ¿Qué falló?
+- **Solución:** ¿Cómo se resolvió?
+- **Prevención:** ¿Cómo evitar que vuelva a pasar?
+```
+
+### 2. SEGUNDO → `gemini.md`
+
+Modifica **SOLO** si la lección altera reglas globales, stack, comandos o directrices de diseño.
+
+### 3. TERCERO → `plan_maestro.md`
+
+- Marca la tarea como completada `[x]`
+- Registra la decisión en la **Bitácora de Decisiones**
+- Vincula lógicamente a los otros archivos
+
+---
+
+## Regla de interconexión
+
+Los 3 archivos son **un solo organismo**. No los trates como entidades aisladas:
+
+- Decisión de diseño en `plan_maestro.md` → reflejarla en `gemini.md`
+- Trampa técnica en implementación → cruzarla con `lecciones_aprendidas.md`
+- Cambio de stack → actualizar ADN + bitácora + lección si aplica
+
+---
+
+## Instalación del skill
+
+| Plataforma | Ruta |
+| :--- | :--- |
+| Cursor | `~/.cursor/skills/tridente-de-memoria/` o `~/.agents/skills/` |
+| Gemini CLI | `~/.gemini/config/skills/tridente-de-memoria/` |
+| Claude Code | `~/.claude/skills/tridente-de-memoria/` |
+
+Repositorio: https://github.com/Cyberdark-Security/tridente-de-memoria-skill

@@ -1,101 +1,260 @@
 <div align="center">
-  <img src="banner.png" alt="Tridente de Memoria" width="100%">
-  <br><br>
-  
-  <img src="https://img.shields.io/badge/WHOAMI--LABS-000000?style=for-the-badge&logo=hackerone&logoColor=00FFFF" alt="Whoami Labs Badge" />
-  <img src="https://img.shields.io/badge/AI_AGENT_SKILL-FF0000?style=for-the-badge&logo=anthropic&logoColor=white" alt="AI Agent Badge" />
-  
-  <h1>🔱 Tridente de Memoria (Memory Trident)</h1>
-  <p><strong>El sistema definitivo de memoria persistente para Agentes de IA</strong></p>
 
-  <a href="#"><img src="https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white"></a>
-  <a href="#"><img src="https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white"></a>
-  <a href="#"><img src="https://img.shields.io/badge/ChatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white"></a>
+<img src="banner.png" alt="Tridente de Memoria" width="100%">
+
+<br><br>
+
+[![WHOAMI LABS](https://img.shields.io/badge/WHOAMI--LABS-000000?style=for-the-badge&logo=hackerone&logoColor=00FFFF)](https://whoami-labs.com)
+[![AI Agent Skill](https://img.shields.io/badge/AI_AGENT_SKILL-FF006E?style=for-the-badge&logo=anthropic&logoColor=white)](https://github.com/Cyberdark-Security/tridente-de-memoria-skill)
+[![License: MIT](https://img.shields.io/badge/License-MIT-00FFFF?style=for-the-badge)](LICENSE)
+
+# 🔱 Tridente de Memoria
+
+**Arquitectura de memoria persistente para agentes de IA**
+
+*Convierte a tu IA de "asistente de código" en un verdadero Arquitecto de Software.*
+
+[![Gemini](https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white)](https://gemini.google.com)
+[![Claude](https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=anthropic&logoColor=white)](https://claude.ai)
+[![ChatGPT](https://img.shields.io/badge/ChatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)](https://chat.openai.com)
+[![Cursor](https://img.shields.io/badge/Cursor-000000?style=for-the-badge&logo=visualstudiocode&logoColor=white)](https://cursor.com)
+
+[🇬🇧 English version](README_EN.md) · [Documentación del Skill](SKILL.md) · [Guía para Agentes](AGENTS.md)
+
 </div>
 
 ---
 
-## ¿Qué es el Tridente de Memoria?
+## Tabla de contenidos
 
-Convierte a tu Inteligencia Artificial de un simple "asistente de código" a un verdadero **Arquitecto de Software** que mantiene el contexto global del proyecto a largo plazo. 
+- [El problema](#-el-problema)
+- [La solución](#-la-solución)
+- [Anatomía del Tridente](#-anatomía-del-tridente)
+- [Flujo de trabajo](#-flujo-de-trabajo)
+- [Instalación](#-instalación)
+- [Inicio rápido](#-inicio-rápido)
+- [Herramientas](#️-herramientas-de-automatización)
+- [Compatibilidad](#-compatibilidad)
 
-Resuelve el mayor problema del desarrollo asistido por IA: **La pérdida de contexto.**
+---
+
+## 🎯 El problema
+
+El desarrollo asistido por IA sufre de un fallo crítico: **la pérdida de contexto**.
+
+Cada nueva sesión, cada cambio de modelo o cada reinicio de chat obliga al agente a "adivinar" la arquitectura, las reglas y los bugs ya resueltos. El resultado: código inconsistente, regresiones y alucinaciones.
 
 <div align="center">
-  <i>"Ningún agente escribirá una sola línea de código a ciegas. Jamás."</i>
+
+> *"Ningún agente escribirá una sola línea de código a ciegas. Jamás."*
+
 </div>
 
 ---
 
-## Características Principales
+## 💡 La solución
 
-| ⚡ Característica | 🎯 Descripción |
+El **Tridente de Memoria** es un protocolo de 3 archivos markdown interconectados que actúan como el **cerebro externo** del proyecto. El agente lee antes de actuar, documenta antes de olvidar y sincroniza antes de divergir.
+
+| Característica | Qué hace |
 | :--- | :--- |
-| **🛡️ Anti-Alucinaciones** | Obliga a la IA a leer las reglas y la arquitectura antes de tocar el código. |
-| **⚙️ Setup Inteligente (Fase 0)** | Entrevista inicial automática: La IA te pregunta cómo quieres el proyecto y crea la estructura. |
-| **📚 Aprendizaje Continuo** | Cada bug resuelto se documenta para que el agente *del futuro* no repita el error. |
-| **🔗 Sincronía Total** | Tres archivos markdown interconectados que actúan como un solo cerebro. |
+| 🛡️ **Anti-alucinaciones** | Obliga a leer reglas y arquitectura antes de tocar código |
+| ⚙️ **Fase Cero** | Entrevista inicial que genera los 3 archivos con contexto real |
+| 📚 **Aprendizaje continuo** | Cada bug resuelto queda documentado para el agente del futuro |
+| 🔗 **Sincronía total** | Los 3 archivos se actualizan en orden estricto, como un solo organismo |
 
 ---
 
-## Anatomía del Tridente
+## 🏗️ Anatomía del Tridente
 
-El sistema se compone de **3 Archivos Maestros**:
+```mermaid
+graph TB
+    subgraph TRIDENTE["🔱 Tridente de Memoria"]
+        DNA["🧬 gemini.md<br/><i>El ADN</i>"]
+        COMPASS["🗺️ plan_maestro.md<br/><i>La Brújula</i>"]
+        SHIELD["🛡️ lecciones_aprendidas.md<br/><i>El Escudo</i>"]
+    end
 
-> ### 1️⃣ `gemini.md` (El ADN)
-> 🧬 Contiene la identidad, el *stack tecnológico* y las **reglas innegociables** del proyecto.
+    AGENT["🤖 Agente de IA"]
+    CODE["💻 Código del Proyecto"]
 
-> ### 2️⃣ `plan_maestro.md` (La Brújula)
-> 🗺️ Define la hoja de ruta, los sprints activos, las tareas (TODO) y la **Bitácora de Decisiones**.
+    AGENT -->|"1. Lee siempre"| DNA
+    AGENT -->|"2. Lee siempre"| COMPASS
+    AGENT -->|"3. Lee siempre"| SHIELD
+    AGENT -->|"4. Escribe con contexto"| CODE
 
-> ### 3️⃣ `lecciones_aprendidas.md` (El Escudo)
-> 🛡️ Registra las *minas activas*, problemas históricos y bugs. **Para no volver a caer en ellos.**
+    SHIELD -.->|"Actualiza primero"| DNA
+    DNA -.->|"Actualiza segundo"| COMPASS
+
+    style DNA fill:#1a1a2e,stroke:#8E75B2,color:#fff
+    style COMPASS fill:#1a1a2e,stroke:#00FFFF,color:#fff
+    style SHIELD fill:#1a1a2e,stroke:#FF006E,color:#fff
+    style AGENT fill:#0d0d0d,stroke:#fff,color:#fff
+    style CODE fill:#0d0d0d,stroke:#74aa9c,color:#fff
+```
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### 🧬 `gemini.md`
+**El ADN**
+
+Identidad, stack tecnológico y **reglas innegociables**. Es la constitución del proyecto.
+
+</td>
+<td width="33%" valign="top">
+
+### 🗺️ `plan_maestro.md`
+**La Brújula**
+
+Hoja de ruta, sprints activos, tareas y **bitácora de decisiones**.
+
+</td>
+<td width="33%" valign="top">
+
+### 🛡️ `lecciones_aprendidas.md`
+**El Escudo**
+
+Minas activas, bugs históricos y trampas técnicas. **Para no caer dos veces.**
+
+</td>
+</tr>
+</table>
 
 ---
 
-## Instalación en tu Ecosistema
+## 🔄 Flujo de trabajo
 
-<details open>
-<summary><b>Haz clic aquí para ver las instrucciones</b></summary>
-<br/>
+```mermaid
+flowchart LR
+    A["🚀 Fase Cero<br/>Entrevista inicial"] --> B["📖 Lectura<br/>Antes de cada tarea"]
+    B --> C["💻 Desarrollo<br/>Con contexto"]
+    C --> D["✍️ Escritura<br/>Orden sagrado"]
+    D --> B
 
-1. **Clona** este repositorio o descarga la carpeta `tridente-de-memoria`.
-2. **Cópiala** en el directorio global de *skills* de tu entorno (ejemplo: `~/.gemini/config/skills/`).
-3. En tu próximo chat, simplemente **activa el sistema** diciéndole a tu IA:
-   > *"Inicia un proyecto nuevo usando el Tridente de Memoria"*
+    style A fill:#8E75B2,stroke:#fff,color:#fff
+    style B fill:#00FFFF,stroke:#000,color:#000
+    style C fill:#74aa9c,stroke:#fff,color:#fff
+    style D fill:#FF006E,stroke:#fff,color:#fff
+```
 
-**Alternativa Rápida (Recomendada):**  
-Simplemente pásale el enlace de este repositorio a tu IA favorita y dile:  
-> *"Instala esta skill en tu directorio de memoria."*
+### El orden sagrado de actualización
+
+Cuando algo cambia en el proyecto, los archivos se actualizan en este orden:
+
+1. **`lecciones_aprendidas.md`** — Documenta el bug o lección técnica
+2. **`gemini.md`** — Solo si cambian reglas globales o el stack
+3. **`plan_maestro.md`** — Marca tareas completadas y registra la decisión
+
+---
+
+## 📦 Instalación
+
+<details>
+<summary><b>Opción A — Instalar como Skill (recomendado)</b></summary>
+
+<br>
+
+Clona este repositorio en el directorio de skills de tu entorno:
+
+| Plataforma | Ruta de instalación |
+| :--- | :--- |
+| **Cursor** | `~/.cursor/skills/` o `~/.agents/skills/` |
+| **Gemini CLI** | `~/.gemini/config/skills/` |
+| **Claude Code** | `~/.claude/skills/` |
+| **Genérico** | Cualquier carpeta de skills de tu agente |
+
+```bash
+git clone https://github.com/Cyberdark-Security/tridente-de-memoria-skill.git
+```
+
+Activa el sistema en tu próximo chat:
+
+> *"Inicia un proyecto nuevo usando el Tridente de Memoria"*
+
+</details>
+
+<details>
+<summary><b>Opción B — Instalación rápida con IA</b></summary>
+
+<br>
+
+Pásale el enlace del repositorio a tu agente favorito:
+
+> *"Instala esta skill en tu directorio de memoria: https://github.com/Cyberdark-Security/tridente-de-memoria-skill"*
+
+</details>
+
+<details>
+<summary><b>Opción C — Solo en un proyecto</b></summary>
+
+<br>
+
+Copia `AGENTS.md` en la raíz de tu proyecto. Los agentes compatibles lo leerán automáticamente y seguirán el protocolo del Tridente.
 
 </details>
 
 ---
 
-## 🛠️ Herramientas de Automatización Multiplataforma
+## ⚡ Inicio rápido
 
-El Tridente incluye scripts interactivos que te permiten inicializar un proyecto local en segundos sin necesidad de pedírselo a una IA. Al ejecutarlos, te harán las preguntas clave y generarán los 3 archivos base.
+Inicializa los 3 archivos en tu proyecto con una entrevista interactiva:
 
-### Para usuarios de Windows (PowerShell)
-Abre tu consola de PowerShell en la carpeta de tu nuevo proyecto y ejecuta:
+**Windows (PowerShell)**
+
 ```powershell
 .\init-tridente.ps1
 ```
 
-### Para usuarios de Linux / macOS / WSL (Bash)
-Abre tu terminal en la carpeta de tu nuevo proyecto, dale permisos de ejecución y lanza el script:
+**Linux / macOS / WSL (Bash)**
+
 ```bash
 chmod +x init-tridente.sh
 ./init-tridente.sh
 ```
 
-### Guía para Agentes Autónomos (`AGENTS.md`)
-Dentro del repositorio encontrarás un archivo `AGENTS.md` escrito en inglés. Cópialo en la raíz de cualquier proyecto junto a tu Tridente. Este archivo actúa como un escudo protector: cuando cualquier IA entre al proyecto, leerá ese archivo e inmediatamente sabrá cómo comportarse, asegurando que no rompa el contexto.
+El script te hará 4 preguntas clave y generará `gemini.md`, `plan_maestro.md` y `lecciones_aprendidas.md` listos para usar.
+
+---
+
+## 🛠️ Herramientas de automatización
+
+| Archivo | Propósito |
+| :--- | :--- |
+| `init-tridente.ps1` | Inicialización interactiva para Windows |
+| `init-tridente.sh` | Inicialización interactiva para Unix |
+| `templates/` | Plantillas base de los 3 archivos maestros |
+| `SKILL.md` | Protocolo completo para agentes autónomos |
+| `AGENTS.md` | Instrucciones de operación (copiar a proyectos) |
+
+---
+
+## 🌐 Compatibilidad
+
+Funciona con cualquier agente de IA que pueda leer archivos markdown del proyecto:
+
+- **Cursor** — vía skills o `AGENTS.md` en la raíz
+- **Gemini CLI / Antigravity** — vía directorio de skills
+- **Claude Code** — vía skills o instrucciones de proyecto
+- **ChatGPT / Copilot** — vía `AGENTS.md` o instrucciones personalizadas
+- **Jules, Devin y otros** — vía `AGENTS.md`
 
 ---
 
 <div align="center">
-  <p>Construida por cyberdark by whoami-labs para la comunidad</p>
-  <p><b>"Potenciando el desarrollo con Inteligencia Artificial"</b></p>
-  <p><i>"la IA potencializa el conocimiento a un 1000 %, donde el límite es tu mente"</i><br><b>— Cyberdark</b></p>
+
+<br>
+
+Construido por **[Cyberdark](https://github.com/Cyberdark-Security)** para **[Whoami Labs](https://whoami-labs.com)**
+
+**"Potenciando el desarrollo con Inteligencia Artificial"**
+
+*"La IA potencializa el conocimiento al 1000 %, donde el límite es tu mente."*
+— **Cyberdark**
+
+<br>
+
+[![GitHub](https://img.shields.io/badge/GitHub-tridente--de--memoria--skill-FF006E?style=flat-square&logo=github)](https://github.com/Cyberdark-Security/tridente-de-memoria-skill)
+
 </div>
