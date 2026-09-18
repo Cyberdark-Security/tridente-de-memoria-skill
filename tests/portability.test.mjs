@@ -200,8 +200,16 @@ test('el generador detecta un artefacto generado que ya nadie declara', () => {
 test('los pesos de las categorías suman 100 en los dos modos', () => {
   // El puntaje se normaliza por peso: si los pesos no suman 100, el reparto
   // entre categorías deja de ser el declarado sin que nadie se entere.
-  for (const args of [['--json', '--min', '0'], ['--project', ROOT, '--json', '--min', '0']]) {
-    const r = JSON.parse(run(process.execPath, ['scripts/validate.mjs', ...args]).out);
+  // Las dos llamadas van escritas enteras, sin propagar un array: así la
+  // comprobación de más abajo puede leerlas. Un `[...args]` esconde justo el
+  // argumento que importa, y ahí fue donde se coló la recursión.
+  const repo = JSON.parse(
+    run(process.execPath, ['scripts/validate.mjs', '--json', '--min', '0', '--no-tests']).out,
+  );
+  const project = JSON.parse(
+    run(process.execPath, ['scripts/validate.mjs', '--project', ROOT, '--json', '--min', '0', '--no-tests']).out,
+  );
+  for (const r of [repo, project]) {
     const total = r.categories.reduce((a, c) => a + c.weight, 0);
     assert.equal(total, 100, `${r.mode}: los pesos suman ${total}`);
   }
@@ -443,4 +451,39 @@ test('el CI no usa NUL como archivo de entrada redirigida', () => {
     !/-RedirectStandardInput\s+NUL\b/.test(ci),
     'NUL no funciona como ruta; usa un archivo vacío real',
   );
+});
+
+test('la recursión validador↔suite es imposible aunque no se pase la bandera', () => {
+  // Regresión real de CI: una prueba invocaba al validador SIN --no-tests y el
+  // validador relanzaba la suite entera. En el runner de Node 18.18 eso agotó
+  // dos timeouts seguidos (120 s y luego 600 s). Depender de recordar la
+  // bandera no sirve: la marca de entorno lo corta pase lo que pase.
+  const t0 = Date.now();
+  const out = run(process.execPath, ['scripts/validate.mjs', '--json', '--min', '0'], {
+    env: { ...process.env, TRIDENTE_VALIDATING: '1' },
+  }).out;
+  const elapsed = Date.now() - t0;
+
+  const report = JSON.parse(out);
+  const ids = report.categories.flatMap((c) => c.checks).map((c) => c.id);
+  assert.ok(!ids.includes('test.run'), 'con TRIDENTE_VALIDATING no debe relanzar la suite');
+  assert.ok(elapsed < 60000, `tardó ${elapsed} ms: volvió a anidarse`);
+});
+
+test('ninguna prueba invoca al validador en modo repositorio sin cortar la recursión', () => {
+  // El guardia de entorno cubre el caso general, pero una llamada sin bandera
+  // y sin entorno marcado seguiría relanzando la suite. Esto lo caza en
+  // revisión en vez de en un runner lento veinte minutos después.
+  const self = 'portability.test.mjs';
+  for (const f of listFiles(join(ROOT, 'tests')).filter((x) => x.endsWith('.test.mjs'))) {
+    const src = readFileSync(join(ROOT, 'tests', f), 'utf8');
+    for (const m of src.matchAll(/run\(\s*process\.execPath\s*,\s*\[([^\]]*)\]/g)) {
+      const args = m[1];
+      if (!args.includes('validate.mjs')) continue;
+      if (args.includes('--project') || args.includes('--no-tests')) continue;
+      // El propio archivo prueba el guardia de entorno a propósito.
+      if (f === self && /TRIDENTE_VALIDATING/.test(src.slice(m.index, m.index + 400))) continue;
+      assert.fail(`tests/${f} invoca al validador en modo repositorio sin --no-tests: [${args.trim()}]`);
+    }
+  }
 });

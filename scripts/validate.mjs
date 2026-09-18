@@ -43,7 +43,13 @@ const JSON_OUT = has('--json');
 // Omite la comprobación que ejecuta `node --test`. Lo usan las propias pruebas
 // al invocar al validador, para no anidar una ejecución de la suite dentro de
 // otra: en un runner lento eso tarda minutos y agota cualquier timeout.
-const NO_TESTS = has('--no-tests');
+//
+// La variable de entorno es el cinturón además de los tirantes: al lanzar la
+// suite se marca el entorno, y cualquier validador que esa suite invoque —con
+// bandera o sin ella— hereda la marca y no vuelve a lanzarla. Así la recursión
+// es imposible por construcción, en vez de depender de acordarse del flag.
+const NESTED = process.env.TRIDENTE_VALIDATING === '1';
+const NO_TESTS = has('--no-tests') || NESTED;
 const MIN = Number(val('--min', '95'));
 if (!Number.isFinite(MIN) || MIN < 0 || MIN > 100) usageError('--min debe ser un número entre 0 y 100.');
 const PROJECT_MODE = has('--project');
@@ -786,7 +792,10 @@ function auditRepo() {
   if (!NO_TESTS) {
     check('test.run', 'La suite de pruebas pasa', 7, () => {
       if (!exists(join(ROOT, 'tests'))) return { ok: false, detail: 'no hay carpeta tests/' };
-      const r = run(process.execPath, ['--test'], { timeout: 600000 });
+      const r = run(process.execPath, ['--test'], {
+        timeout: 600000,
+        env: { ...process.env, TRIDENTE_VALIDATING: '1' },
+      });
       const m = r.out.match(/^# fail (\d+)$/m);
       return {
         ok: r.code === 0,
