@@ -1,0 +1,41 @@
+{
+  "name": "tridente-de-memoria",
+  "version": "2.5.1",
+  "description": "Arquitectura de memoria persistente para agentes de IA: 3 archivos maestros interconectados, generados desde una fuente única de verdad y verificables con puntaje.",
+  "keywords": [
+    "ai-agents",
+    "agents-md",
+    "persistent-memory",
+    "claude-code",
+    "codex",
+    "cursor",
+    "gemini-cli",
+    "copilot",
+    "prompt-engineering",
+    "documentation"
+  ],
+  "homepage": "https://github.com/Cyberdark-Security/tridente-de-memoria-skill#readme",
+  "bugs": "https://github.com/Cyberdark-Security/tridente-de-memoria-skill/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cyberdark-Security/tridente-de-memoria-skill.git"
+  },
+  "license": "MIT",
+  "author": "Cyberdark (Whoami Labs)",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=18.18"
+  },
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "sync:check": "node scripts/sync.mjs --check",
+    "validate": "node scripts/validate.mjs",
+    "validate:project": "node scripts/validate.mjs --project .",
+    "test": "node --test",
+    "scan:secrets": "node scripts/scan-secrets.mjs",
+    "check": "npm run sync:check && npm test && npm run validate && npm run scan:secrets",
+    "init": "bash init-tridente.sh"
+  },
+  "$comment": "Sin dependencias a propósito: el tooling usa sólo la biblioteca estándar de Node. El protocolo en sí es markdown puro y no necesita Node para nada."
+}

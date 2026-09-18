@@ -11,8 +11,6 @@ Tu misión: mantener el contexto completo del proyecto y no reintroducir errores
 
 > **Regla de oro: NINGÚN CÓDIGO SE ESCRIBE SIN ANTES LEER EL TRIDENTE.**
 
-> 🇬🇧 English version: [`docs/AGENTS.en.md`](docs/AGENTS.en.md)
-
 ---
 
 ## 1. Los tres archivos maestros
@@ -23,7 +21,7 @@ Tu misión: mantener el contexto completo del proyecto y no reintroducir errores
 | `plan_maestro.md` | 🗺️ La Brújula | Roadmap, hito actual, sprint activo, backlog y bitácora de decisiones. |
 | `lecciones_aprendidas.md` | 🛡️ El Escudo | Minas activas, bugs históricos y trampas técnicas ya pagadas. |
 
-Los nombres son canónicos. Si un proyecto ya usa alias (`GEMINI.md`, `PROJECT_DNA.md`, `CLAUDE.md`, `AGENT_DNA.md`…), identifícalos **por su función**, no sólo por el nombre.
+Los nombres son canónicos. Si este proyecto usa alias (`GEMINI.md`, `PROJECT_DNA.md`, `CLAUDE.md`, `AGENT_DNA.md`…), identifícalos **por su función**, no sólo por el nombre.
 
 ---
 
@@ -96,20 +94,17 @@ ISO 8601 es ordenable lexicográficamente y no ambiguo entre locales. DD/MM/AAAA
 
 ---
 
-## 5. Fase Cero (inicialización)
+## 5. Fase Cero (si falta algún archivo maestro)
 
-Cuando el usuario pide *"instala el Tridente"* / *"inicia un proyecto con el Tridente"* y los archivos no existen:
+Haz estas preguntas, una por una, y espera la respuesta:
 
-1. **Con terminal** → `bash init-tridente.sh` (Unix/WSL/Git Bash) o `powershell -ExecutionPolicy Bypass -File init-tridente.ps1` (Windows).
-2. **Sin terminal** → haz estas preguntas, una por una, y espera la respuesta:
-   1. ¿Cuál es el objetivo principal del proyecto?
-   2. ¿Qué stack tecnológico vamos a utilizar?
-   3. ¿Qué regla es innegociable en este proyecto?
-   4. ¿Cuál es el primer hito o sprint?
-   Después crea los tres archivos a partir de `templates/`, sustituyendo cada token `{{...}}`.
-3. **Nunca** crees archivos vacíos ni inventes datos del proyecto.
+1. ¿Cuál es el objetivo principal del proyecto?
+2. ¿Qué stack tecnológico vamos a utilizar?
+3. ¿Qué regla es innegociable en este proyecto?
+4. ¿Cuál es el primer hito o sprint?
 
-Al terminar, deja `AGENTS.md` en la raíz del proyecto.
+Con las respuestas, crea los archivos que falten con las secciones de la sección 1.
+**Nunca** los crees vacíos ni inventes datos del proyecto.
 
 ---
 
@@ -127,19 +122,20 @@ Una entrada que no enlaza con las otras dos es una entrada huérfana: **el tride
 
 ## 7. Verificación
 
-Antes de dar por cerrada una tarea que tocó los archivos maestros:
+Antes de dar por cerrada una tarea que tocó los archivos maestros, comprueba a mano:
 
-```bash
-node scripts/validate.mjs
-```
-
-El validador comprueba nombres, secciones, orden, formato de fecha y enlaces cruzados, y devuelve un puntaje 0–100.
+- [ ] Los 3 archivos existen y conservan todas sus secciones.
+- [ ] Toda entrada nueva lleva fecha en `YYYY-MM-DD` y **todos** sus campos.
+- [ ] Cada entrada enlaza con los otros dos archivos cuando corresponde.
+- [ ] Ninguna decisión del plan contradice una regla del ADN.
 
 ---
 
 ## 8. Compatibilidad entre herramientas
 
-`AGENTS.md` es la **única fuente** de estas instrucciones. El resto de archivos de configuración de agentes son punteros generados que reenvían aquí.
+Este archivo es la **única fuente** de estas instrucciones. El resto de archivos de
+configuración de agentes de este proyecto son punteros que reenvían aquí; si los
+editas, edita este archivo en su lugar.
 
 | Herramienta | Archivo que lee | Mecanismo |
 | :--- | :--- | :--- |
@@ -158,4 +154,6 @@ El validador comprueba nombres, secciones, orden, formato de fecha y enlaces cru
 | Devin Desktop (ex-Windsurf) | `.devin/rules/tridente.md` | Adaptador generado |
 | Cline | `.clinerules/tridente.md` | Adaptador generado |
 
-**No edites los punteros a mano.** Edita `protocol/tridente.spec.json` y ejecuta `node scripts/sync.mjs`.
+---
+
+*Tridente de Memoria v2.5.1 — https://github.com/Cyberdark-Security/tridente-de-memoria-skill*

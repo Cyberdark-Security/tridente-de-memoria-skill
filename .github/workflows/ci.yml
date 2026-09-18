@@ -1,0 +1,204 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # La comprobación que impide que la documentación vuelva a desincronizarse.
+  sync:
+    name: Documentación sincronizada con el SSOT
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: El spec es JSON válido
+        run: node -e "JSON.parse(require('fs').readFileSync('protocol/tridente.spec.json','utf8'));console.log('ok')"
+
+      - name: Ningún artefacto derivado se editó a mano
+        run: node scripts/sync.mjs --check
+
+      - name: Regenerar y comprobar que no hay diferencias
+        run: |
+          node scripts/sync.mjs
+          # --porcelain también ve los archivos nuevos sin rastrear;
+          # `git diff` solo no los detectaría.
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::La documentación generada no está al día. Ejecuta 'node scripts/sync.mjs' y añade el resultado al commit."
+            git status --porcelain
+            git --no-pager diff --stat
+            exit 1
+          fi
+
+  test:
+    name: Pruebas (${{ matrix.os }}, Node ${{ matrix.node }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: ['22']
+        include:
+          # El mínimo declarado en package.json debe probarse de verdad:
+          # `node --test` descubre los archivos de forma distinta en 18.x.
+          - os: ubuntu-latest
+            node: '18.18'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Versión de bash (macOS trae 3.2 de fábrica)
+        if: runner.os != 'Windows'
+        run: bash --version | head -1
+
+      - name: Ejecutar la suite
+        run: node --test
+
+  validate:
+    name: Puntaje del validador
+    runs-on: ubuntu-latest
+    needs: [sync]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Auditoría del repositorio (umbral 95/100)
+        run: node scripts/validate.mjs --min 95
+
+      - name: Resumen del puntaje
+        if: always()
+        run: |
+          {
+            echo '## 🔱 Auditoría del Tridente'
+            echo ''
+            echo '```'
+            node scripts/validate.mjs || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  secrets:
+    name: Barrido de secretos (árbol + historial completo)
+    runs-on: ubuntu-latest
+    steps:
+      # fetch-depth: 0 es imprescindible: con el clon superficial por defecto
+      # sólo se vería el último commit, y lo que hay que revisar es TODO el
+      # historial — un archivo borrado sigue estando en los commits anteriores.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Ningún token ni credencial, tampoco en commits antiguos
+        run: node scripts/scan-secrets.mjs
+
+  shell:
+    name: Análisis estático de los scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar ShellCheck
+        # Se instala desde los repositorios de la distribución en vez de usar
+        # una acción de terceros anclada a una rama móvil.
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: ShellCheck
+        run: shellcheck --severity=warning init-tridente.sh protocol/manifest.sh
+
+      - name: PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          Install-Module PSScriptAnalyzer -Force -Scope CurrentUser -ErrorAction Stop
+          $issues = Invoke-ScriptAnalyzer -Path ./init-tridente.ps1 -Severity Error,Warning
+          if ($issues) { $issues | Format-Table -AutoSize | Out-String | Write-Host; exit 1 }
+          Write-Host 'PSScriptAnalyzer: sin hallazgos'
+
+  smoke:
+    name: Fase Cero de extremo a extremo (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      # macOS trae bash 3.2: es el escenario donde la sustitución de tokens
+      # podría comportarse distinto, así que aquí se ejecuta de verdad.
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Inicializar un proyecto (Bash)
+        if: runner.os != 'Windows'
+        run: |
+          bash init-tridente.sh --dir "$RUNNER_TEMP/demo" \
+            --goal "Objetivo de prueba" --stack "Node 22" \
+            --rules "Sin dependencias" --milestone "MVP" --yes --quiet
+          node scripts/validate.mjs --project "$RUNNER_TEMP/demo"
+
+      - name: Inicializar un proyecto (Windows PowerShell 5.1)
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          .\init-tridente.ps1 -Dir "$env:RUNNER_TEMP\demo" `
+            -Goal "Objetivo de prueba" -Stack "Node 22" `
+            -Rules "Sin dependencias" -Milestone "MVP" -Yes -Quiet
+          node scripts/validate.mjs --project "$env:RUNNER_TEMP\demo"
+
+      # Los dos bugs críticos de la v2.0.0 sólo aparecían aquí: sin terminal,
+      # el script de PowerShell se colgaba o sobrescribía archivos del usuario.
+      - name: Sin terminal y sin datos, debe abortar (no colgarse)
+        if: runner.os != 'Windows'
+        run: |
+          set +e
+          timeout 30 bash init-tridente.sh --dir "$RUNNER_TEMP/eof" --yes --quiet < /dev/null
+          code=$?
+          set -e
+          test "$code" -ne 0 && test "$code" -ne 124 || { echo "::error::no abortó (código $code)"; exit 1; }
+
+      - name: Sin terminal y sin datos, debe abortar (PowerShell)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        timeout-minutes: 2
+        run: |
+          $p = Start-Process powershell -PassThru -Wait -NoNewWindow -RedirectStandardInput NUL `
+            -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File','.\init-tridente.ps1',
+                          '-Dir',"$env:RUNNER_TEMP\eof",'-Yes','-Quiet'
+          if ($p.ExitCode -eq 0) { Write-Error 'no abortó al faltar los datos'; exit 1 }
+
+      - name: Sin -Yes, no debe sobrescribir archivos del usuario
+        if: runner.os == 'Windows'
+        shell: pwsh
+        timeout-minutes: 2
+        run: |
+          # El nombre del archivo maestro sale del manifiesto, no escrito a mano:
+          # un renombrado en el spec no debe dejar este job probando otra cosa.
+          . .\protocol\manifest.ps1
+          $victim = Join-Path "$env:RUNNER_TEMP\clash" $TridenteMasters[0]
+          New-Item -ItemType Directory -Force -Path "$env:RUNNER_TEMP\clash" | Out-Null
+          Set-Content $victim '# centinela'
+          $p = Start-Process powershell -PassThru -Wait -NoNewWindow -RedirectStandardInput NUL `
+            -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File','.\init-tridente.ps1',
+                          '-Dir',"$env:RUNNER_TEMP\clash",'-Goal','g','-Stack','s','-Rules','r','-Milestone','m'
+          if ($p.ExitCode -eq 0) { Write-Error 'no abortó ante la colisión'; exit 1 }
+          if ((Get-Content $victim -Raw) -notmatch 'centinela') {
+            Write-Error 'sobrescribió el archivo del usuario'; exit 1
+          }

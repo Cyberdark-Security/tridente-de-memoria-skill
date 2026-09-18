@@ -1,0 +1,78 @@
+name: 🐛 Reporte de bug
+description: Algo del Tridente no funciona como está documentado
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por reportarlo. Antes de nada, pega la salida del validador:
+        `node scripts/validate.mjs`
+
+  - type: textarea
+    id: que-pasa
+    attributes:
+      label: Qué pasa
+      description: Comportamiento observado, en una o dos frases.
+    validations:
+      required: true
+
+  - type: textarea
+    id: que-esperabas
+    attributes:
+      label: Qué esperabas que pasara
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproducir
+    attributes:
+      label: Cómo reproducirlo
+      placeholder: |
+        1. bash init-tridente.sh --dir /tmp/demo --yes
+        2. …
+      render: shell
+    validations:
+      required: true
+
+  - type: dropdown
+    id: componente
+    attributes:
+      label: Componente afectado
+      multiple: true
+      options:
+        - init-tridente.sh (Bash)
+        - init-tridente.ps1 (PowerShell)
+        - scripts/sync.mjs (generador)
+        - scripts/validate.mjs (validador)
+        - Plantillas (templates/)
+        - AGENTS.md / SKILL.md
+        - Puntero de una herramienta concreta
+        - Documentación (README)
+    validations:
+      required: true
+
+  - type: input
+    id: so
+    attributes:
+      label: Sistema operativo y shell
+      placeholder: "Windows 11 / PowerShell 5.1 · Ubuntu 24.04 / bash 5.2 · macOS 15 / zsh"
+    validations:
+      required: true
+
+  - type: input
+    id: node
+    attributes:
+      label: Versión de Node
+      placeholder: "node --version"
+
+  - type: input
+    id: herramienta
+    attributes:
+      label: Agente de IA usado
+      placeholder: "Claude Code, Codex, Cursor, Gemini CLI, Copilot…"
+
+  - type: textarea
+    id: validador
+    attributes:
+      label: Salida de `node scripts/validate.mjs`
+      render: text

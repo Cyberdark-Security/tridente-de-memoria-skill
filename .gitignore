@@ -1,21 +1,36 @@
-# OS
+# Sistema operativo
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Editor
+# Editores
 .vscode/
 .idea/
 *.swp
 *~
 
-# Session / temp
+# Node (sólo tooling de desarrollo; el skill no tiene dependencias en runtime)
+node_modules/
+npm-debug.log*
+.npm/
+
+# Sesiones y temporales
 jules_session/
 *.tmp
 *.bak
+.tridente-tmp/
 
-# Secrets
+# Material que no pertenece a este repositorio.
+# GCP_Proyectos contiene un inventario de infraestructura interna: NO debe
+# publicarse en un repositorio público. Se ignora para que un `git add .`
+# accidental no lo suba. Muévelo fuera de esta carpeta cuando puedas.
+GCP_Proyectos/
+
+# Secretos
 .env
 .env.*
+!.env.example
 *.pem
+*.key
 credentials.json
+service-account*.json

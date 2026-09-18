@@ -1,0 +1,25 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.md]
+# Markdown usa dos espacios finales como salto de línea duro.
+trim_trailing_whitespace = false
+
+[*.sh]
+indent_size = 4
+
+[*.ps1]
+# Windows PowerShell 5.1 lee .ps1 como ANSI si no hay BOM UTF-8.
+charset = utf-8-bom
+end_of_line = crlf
+indent_size = 4
+
+[Makefile]
+indent_style = tab

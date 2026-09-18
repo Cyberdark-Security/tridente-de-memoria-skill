@@ -1,0 +1,47 @@
+name: 🔌 Soporte para una herramienta de IA
+description: Pide (o aporta) compatibilidad con un editor o agente que aún no está
+labels: ["compatibilidad"]
+body:
+  - type: input
+    id: herramienta
+    attributes:
+      label: Herramienta
+      placeholder: "Zed, Continue, Trae, Kilo Code…"
+    validations:
+      required: true
+
+  - type: input
+    id: ruta
+    attributes:
+      label: Ruta del archivo de instrucciones que lee
+      description: Ruta relativa a la raíz del proyecto.
+      placeholder: ".zed/rules.md"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: formato
+    attributes:
+      label: Formato del archivo
+      options:
+        - markdown (texto plano)
+        - markdown con frontmatter YAML
+        - JSON de configuración
+        - Soporta import/include de otro archivo
+        - Lee AGENTS.md de forma nativa
+    validations:
+      required: true
+
+  - type: input
+    id: doc
+    attributes:
+      label: Enlace a la documentación oficial que lo confirma
+      description: Sin fuente no se puede verificar; es el motivo más común de rechazo.
+    validations:
+      required: true
+
+  - type: textarea
+    id: notas
+    attributes:
+      label: Notas
+      description: Colisiones de nombre, orden de precedencia, límites de tamaño, comportamiento por versión.
