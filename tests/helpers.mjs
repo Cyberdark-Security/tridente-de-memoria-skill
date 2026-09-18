@@ -57,7 +57,7 @@ export function run(cmd, args, opts = {}) {
         cwd: ROOT,
         encoding: 'utf8',
         stdio: ['ignore', 'pipe', 'pipe'],
-        timeout: 120000,
+        timeout: 600000,
         ...opts,
       }),
     };

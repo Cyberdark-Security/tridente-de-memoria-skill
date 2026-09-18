@@ -118,8 +118,8 @@ test('el manifiesto de PowerShell sólo contiene asignaciones, sin lógica', () 
 });
 
 test('el validador es determinista: dos ejecuciones dan el mismo puntaje', () => {
-  const a = JSON.parse(run(process.execPath, ['scripts/validate.mjs', '--json', '--min', '0']).out);
-  const b = JSON.parse(run(process.execPath, ['scripts/validate.mjs', '--json', '--min', '0']).out);
+  const a = JSON.parse(run(process.execPath, ['scripts/validate.mjs', '--json', '--min', '0', '--no-tests']).out);
+  const b = JSON.parse(run(process.execPath, ['scripts/validate.mjs', '--json', '--min', '0', '--no-tests']).out);
   assert.equal(a.score, b.score);
 });
 
@@ -127,7 +127,7 @@ test('el validador no modifica el repositorio al auditarlo', () => {
   // `git status --porcelain` NO basta: si un archivo ya figura como modificado,
   // cambiar su contenido deja la salida idéntica. Hay que comparar el contenido.
   const before = treeFingerprint();
-  run(process.execPath, ['scripts/validate.mjs', '--min', '0']);
+  run(process.execPath, ['scripts/validate.mjs', '--min', '0', '--no-tests']);
   assert.equal(treeFingerprint(), before, 'auditar cambió archivos del árbol de trabajo');
 });
 
@@ -362,7 +362,7 @@ test('ningún marcador que emita el generador sobrevive al medidor de contenido'
   // El fallo simétrico: la lista de marcadores del validador era una segunda
   // fuente de verdad y se desincronizó de los hints del spec, de modo que una
   // entrada pegada literalmente desde AGENTS.md contaba como sección rellena.
-  const report = JSON.parse(run(process.execPath, ['scripts/validate.mjs', '--json', '--min', '0']).out);
+  const report = JSON.parse(run(process.execPath, ['scripts/validate.mjs', '--json', '--min', '0', '--no-tests']).out);
   const c = report.categories.flatMap((x) => x.checks).find((x) => x.id === 'ssot.placeholders');
   assert.ok(c, 'falta la comprobación ssot.placeholders');
   assert.equal(c.ok, true, c.detail);
@@ -408,4 +408,39 @@ test('el detector de relleno no castiga contenido legítimo corto', () => {
       assert.equal(content.pct, 100, `"${fill}" se marcó como relleno: ${content.checks.find((k) => !k.ok)?.detail}`);
     }
   });
+});
+
+test('--no-tests evita que el validador ejecute la suite dentro de la suite', () => {
+  // Regresión de CI: la suite invoca al validador y el validador invocaba a la
+  // suite. En un runner lento esa ejecución anidada agotaba el timeout y la
+  // prueba fallaba con "Unexpected end of JSON input".
+  const t0 = Date.now();
+  const out = run(process.execPath, ['scripts/validate.mjs', '--json', '--min', '0', '--no-tests']).out;
+  const elapsed = Date.now() - t0;
+
+  const report = JSON.parse(out);
+  const ids = report.categories.flatMap((c) => c.checks).map((c) => c.id);
+  assert.ok(!ids.includes('test.run'), '--no-tests no debería ejecutar la suite');
+  assert.ok(elapsed < 60000, `tardó ${elapsed} ms: probablemente volvió a anidarse`);
+
+  // Aunque se omita la comprobación, los pesos siguen sumando 100.
+  assert.equal(report.categories.reduce((a, c) => a + c.weight, 0), 100);
+});
+
+test('el manifiesto de bash silencia SC2034 con motivo', () => {
+  // ShellCheck analiza archivo por archivo: no puede ver que init-tridente.sh
+  // consume estas variables, así que las daría todas por no usadas.
+  const m = readFileSync(join(ROOT, 'protocol/manifest.sh'), 'utf8');
+  assert.match(m, /# shellcheck disable=SC2034/);
+  assert.match(m, /source/, 'la directiva debe ir acompañada del motivo');
+});
+
+test('el CI no usa NUL como archivo de entrada redirigida', () => {
+  // `-RedirectStandardInput NUL` se resuelve como ruta relativa del workspace,
+  // no como el dispositivo nulo, y el job falla antes de probar nada.
+  const ci = readFileSync(join(ROOT, '.github/workflows/ci.yml'), 'utf8');
+  assert.ok(
+    !/-RedirectStandardInput\s+NUL\b/.test(ci),
+    'NUL no funciona como ruta; usa un archivo vacío real',
+  );
 });

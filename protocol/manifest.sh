@@ -5,6 +5,11 @@
 # tridente:header-end
 #
 # Datos del protocolo para init-tridente.sh. Se carga con 'source'.
+#
+# shellcheck disable=SC2034
+# Todas estas variables las consume init-tridente.sh, que hace source de este
+# archivo. ShellCheck analiza cada archivo por separado y no puede verlo, así
+# que las daría por no usadas.
 
 TRIDENTE_VERSION="2.5.1"
 TRIDENTE_DATE_FORMAT="+%Y-%m-%d"

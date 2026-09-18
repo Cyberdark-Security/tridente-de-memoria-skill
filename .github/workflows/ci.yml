@@ -179,7 +179,13 @@ jobs:
         shell: pwsh
         timeout-minutes: 2
         run: |
-          $p = Start-Process powershell -PassThru -Wait -NoNewWindow -RedirectStandardInput NUL `
+          # Start-Process resuelve -RedirectStandardInput como ruta relativa, así
+          # que 'NUL' acaba siendo un archivo inexistente del workspace y no el
+          # dispositivo nulo. Se usa un archivo vacío real: cerrado desde el
+          # primer byte, que es justo la condición de EOF que hay que probar.
+          $empty = Join-Path $env:RUNNER_TEMP 'vacio.txt'
+          New-Item -ItemType File -Force -Path $empty | Out-Null
+          $p = Start-Process powershell -PassThru -Wait -NoNewWindow -RedirectStandardInput $empty `
             -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File','.\init-tridente.ps1',
                           '-Dir',"$env:RUNNER_TEMP\eof",'-Yes','-Quiet'
           if ($p.ExitCode -eq 0) { Write-Error 'no abortó al faltar los datos'; exit 1 }
@@ -195,7 +201,9 @@ jobs:
           $victim = Join-Path "$env:RUNNER_TEMP\clash" $TridenteMasters[0]
           New-Item -ItemType Directory -Force -Path "$env:RUNNER_TEMP\clash" | Out-Null
           Set-Content $victim '# centinela'
-          $p = Start-Process powershell -PassThru -Wait -NoNewWindow -RedirectStandardInput NUL `
+          $empty = Join-Path $env:RUNNER_TEMP 'vacio.txt'
+          New-Item -ItemType File -Force -Path $empty | Out-Null
+          $p = Start-Process powershell -PassThru -Wait -NoNewWindow -RedirectStandardInput $empty `
             -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File','.\init-tridente.ps1',
                           '-Dir',"$env:RUNNER_TEMP\clash",'-Goal','g','-Stack','s','-Rules','r','-Milestone','m'
           if ($p.ExitCode -eq 0) { Write-Error 'no abortó ante la colisión'; exit 1 }

@@ -7,6 +7,7 @@
  *   node scripts/validate.mjs --json          salida JSON
  *   node scripts/validate.mjs --min 95        umbral (por defecto 95)
  *   node scripts/validate.mjs --strict        en modo proyecto, exige el umbral
+ *   node scripts/validate.mjs --no-tests      omite ejecutar la suite de pruebas
  *
  * Código de salida:
  *   - Modo repositorio: 0 si el puntaje >= umbral. Es una puerta de calidad.
@@ -39,6 +40,10 @@ const usageError = (msg) => {
 };
 
 const JSON_OUT = has('--json');
+// Omite la comprobación que ejecuta `node --test`. Lo usan las propias pruebas
+// al invocar al validador, para no anidar una ejecución de la suite dentro de
+// otra: en un runner lento eso tarda minutos y agota cualquier timeout.
+const NO_TESTS = has('--no-tests');
 const MIN = Number(val('--min', '95'));
 if (!Number.isFinite(MIN) || MIN < 0 || MIN > 100) usageError('--min debe ser un número entre 0 y 100.');
 const PROJECT_MODE = has('--project');
@@ -775,12 +780,20 @@ function auditRepo() {
   // ------------------------------------------------------- 6. Pruebas y CI
   category('Pruebas y CI', 14);
 
-  check('test.run', 'La suite de pruebas pasa', 7, () => {
-    if (!exists(join(ROOT, 'tests'))) return { ok: false, detail: 'no hay carpeta tests/' };
-    const r = run(process.execPath, ['--test']);
-    const m = r.out.match(/^# fail (\d+)$/m);
-    return { ok: r.code === 0, detail: r.code === 0 ? '' : `fallos: ${m?.[1] ?? '?'} — ${r.out.trim().split('\n').slice(-4).join(' | ')}` };
-  });
+  // La suite de pruebas invoca al validador y el validador invoca a la suite:
+  // sin esta salida, una llamada desde un test lanza una ejecución anidada que
+  // en un runner lento supera cualquier timeout razonable.
+  if (!NO_TESTS) {
+    check('test.run', 'La suite de pruebas pasa', 7, () => {
+      if (!exists(join(ROOT, 'tests'))) return { ok: false, detail: 'no hay carpeta tests/' };
+      const r = run(process.execPath, ['--test'], { timeout: 600000 });
+      const m = r.out.match(/^# fail (\d+)$/m);
+      return {
+        ok: r.code === 0,
+        detail: r.code === 0 ? '' : `fallos: ${m?.[1] ?? '?'} — ${r.out.trim().split('\n').slice(-4).join(' | ')}`,
+      };
+    });
+  }
 
   check('test.count', 'Al menos 20 aserciones de prueba', 4, () => {
     if (!exists(join(ROOT, 'tests'))) return false;
