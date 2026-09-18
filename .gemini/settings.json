@@ -1,0 +1,13 @@
+{
+  "$comment": "Puntero del Tridente de Memoria: el contexto real vive en AGENTS.md.",
+  "context": {
+    "fileName": [
+      "AGENTS.md",
+      "gemini.md"
+    ]
+  },
+  "contextFileName": [
+    "AGENTS.md",
+    "gemini.md"
+  ]
+}

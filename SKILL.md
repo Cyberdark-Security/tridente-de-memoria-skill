@@ -1,123 +1,116 @@
 ---
 name: tridente-de-memoria
-description: >
-  Sistema de memoria persistente basado en 3 archivos interconectados
-  (gemini.md, plan_maestro.md, lecciones_aprendidas.md). Inicializa proyectos
-  con entrevista interactiva (Fase Cero) y se usa SIEMPRE antes de escribir
-  código para mantener el contexto. Compatible con Cursor, Gemini, Claude,
-  ChatGPT y agentes autónomos.
+description: Sistema de memoria persistente basado en 3 archivos interconectados (gemini.md, plan_maestro.md, lecciones_aprendidas.md). Inicializa proyectos con entrevista interactiva (Fase Cero) y se usa SIEMPRE antes de escribir o modificar código para mantener el contexto. Compatible con Claude Code, Codex, Cursor, Gemini, Copilot y agentes autónomos.
+license: MIT
+metadata:
+  version: 2.5.1
+  repository: https://github.com/Cyberdark-Security/tridente-de-memoria-skill
 ---
+
+<!-- tridente:header-start -->
+<!-- GENERADO POR scripts/sync.mjs — NO EDITAR A MANO.
+     Fuente de verdad: protocol/tridente.spec.json
+     Regenerar con: node scripts/sync.mjs -->
+<!-- tridente:header-end -->
 
 # 🔱 Tridente de Memoria (Memory Trident)
 
-Protocolo de **Memoria Persistente Compartida** para mantener el contexto de agentes de IA sincronizado a largo plazo.
-
-## Cuándo usar este skill
-
-- El usuario pide **iniciar un proyecto nuevo** con memoria persistente
-- El usuario dice **"instala el Tridente"**, **"Memory Trident"** o similar
-- Vas a **modificar código** y existen (o deberían existir) los 3 archivos maestros
-- El usuario pregunta **cómo mantener contexto** entre sesiones de IA
-- Detectas que el proyecto **no tiene reglas documentadas** y el agente está "adivinando"
-
-## Regla de oro
+Protocolo de **memoria persistente compartida** que mantiene sincronizado el contexto de los agentes de IA a lo largo del tiempo.
 
 > **NINGÚN CÓDIGO SE ESCRIBE SIN ANTES LEER EL TRIDENTE.**
 
----
+## Cuándo usar este skill
 
-## Los 3 archivos maestros
+- El usuario pide **iniciar un proyecto** con memoria persistente.
+- El usuario dice **"instala el Tridente"**, **"Memory Trident"** o equivalente.
+- Vas a **modificar código** y existen (o deberían existir) los tres archivos maestros.
+- El usuario pregunta **cómo mantener contexto** entre sesiones de IA.
+- Detectas que el proyecto **no tiene reglas documentadas** y el agente está adivinando.
+
+## Los tres archivos maestros
 
 | Archivo | Rol | Contenido |
 | :--- | :--- | :--- |
-| `gemini.md` | 🧬 El ADN | Identidad, stack, reglas innegociables, arquitectura |
-| `plan_maestro.md` | 🗺️ La Brújula | Roadmap, sprint activo, backlog, bitácora de decisiones |
-| `lecciones_aprendidas.md` | 🛡️ El Escudo | Minas activas, bugs históricos, conocimiento adquirido |
+| `gemini.md` | 🧬 El ADN | Identidad, stack tecnológico, reglas innegociables y arquitectura del proyecto. |
+| `plan_maestro.md` | 🗺️ La Brújula | Roadmap, hito actual, sprint activo, backlog y bitácora de decisiones. |
+| `lecciones_aprendidas.md` | 🛡️ El Escudo | Minas activas, bugs históricos y trampas técnicas ya pagadas. |
 
-**Nota sobre nombres:** `gemini.md` es el nombre canónico, pero el archivo de ADN puede llamarse de otra forma en proyectos existentes (ej. `PROJECT_DNA.md`, `CLAUDE.md`). Identifícalo por su función, no solo por el nombre.
-
----
-
-## Fase Cero: Inicialización
-
-Si los 3 archivos **NO existen**, está **estrictamente prohibido** crearlos vacíos o inventar el proyecto.
-
-### Opción 1 — Script (si tienes terminal)
-
-```bash
-# Unix
-./init-tridente.sh
-
-# Windows
-.\init-tridente.ps1
-```
-
-### Opción 2 — Entrevista interactiva
-
-Haz estas preguntas al usuario (una por una o en bloque claro):
-
-1. **¿Cuál es el objetivo principal del proyecto?**
-2. **¿Qué stack tecnológico vamos a utilizar?** (Frontend, Backend, BD, infra)
-3. **¿Tienes reglas innegociables, límites de diseño o preferencias de infraestructura?**
-4. **¿Cuál sería el primer hito o sprint para empezar?**
-
-Con las respuestas, **crea y puebla** los 3 archivos usando las plantillas de `templates/` como base. Copia también `AGENTS.md` a la raíz del proyecto.
-
----
+**Alias:** `gemini.md` (≈ `GEMINI.md`, `PROJECT_DNA.md`, `CLAUDE.md`, `AGENT_DNA.md`) · `plan_maestro.md` (≈ `PLAN_MAESTRO.md`, `MASTER_PLAN.md`) · `lecciones_aprendidas.md` (≈ `LECCIONES_APRENDIDAS.md`, `LESSONS_LEARNED.md`). Identifica por función, no por nombre.
 
 ## Protocolo de lectura
 
-Antes de cada tarea o modificación de código:
-
-1. **Lee los 3 archivos** — Entiende dónde estás, qué límites hay y qué errores evitar
-2. **Pregunta si hay ambigüedad** — No asumas; consulta al usuario
-3. **Sincroniza** — Si hay decisiones pendientes, actualiza el tridente *antes* de programar
-
----
+1. `gemini.md` — Stack, reglas innegociables, arquitectura
+2. `plan_maestro.md` — Hito actual, tareas activas, bitácora de decisiones
+3. `lecciones_aprendidas.md` — Minas activas, bugs conocidos, lecciones pasadas
 
 ## Protocolo de escritura (orden sagrado)
 
-Cuando hay un cambio arquitectónico, bug resuelto o decisión clave:
+1. `lecciones_aprendidas.md` — Minas activas, bugs históricos y trampas técnicas ya pagadas.
+2. `gemini.md` — Identidad, stack tecnológico, reglas innegociables y arquitectura del proyecto.
+3. `plan_maestro.md` — Roadmap, hito actual, sprint activo, backlog y bitácora de decisiones.
 
-### 1. PRIMERO → `lecciones_aprendidas.md`
+> Primero la lección (el dolor se documenta caliente), luego la regla global si cambió, y al final el plan (que referencia a ambos). Al revés, el plan apuntaría a entradas que todavía no existen.
 
-Documenta el fallo o lección técnica. El agente del futuro no debe caer en la misma trampa.
+### Formatos de entrada
 
 ```markdown
-### [Fecha] - [Título]
-- **Problema:** ¿Qué falló?
-- **Solución:** ¿Cómo se resolvió?
-- **Prevención:** ¿Cómo evitar que vuelva a pasar?
+### YYYY-MM-DD — [Título]
+- **Problema:** [Qué falló]
+- **Solución:** [Cómo se resolvió]
+- **Prevención:** [Cómo evitar que vuelva a pasar]
+- **Impacto en reglas:** [¿Requiere cambio en gemini.md? Sí/No]
 ```
 
-### 2. SEGUNDO → `gemini.md`
+```markdown
+### YYYY-MM-DD — [Título]
+- **Decisión:** [Qué se decidió]
+- **Razón:** [Por qué]
+- **Impacto:** [Qué partes del sistema se ven afectadas]
+- **Relacionado:** [Enlace a la lección o al cambio en gemini.md, si aplica] *(opcional)*
+```
 
-Modifica **SOLO** si la lección altera reglas globales, stack, comandos o directrices de diseño.
+Fechas en **YYYY-MM-DD** (ISO 8601), p. ej. `2026-09-17`.
 
-### 3. TERCERO → `plan_maestro.md`
+## Fase Cero
 
-- Marca la tarea como completada `[x]`
-- Registra la decisión en la **Bitácora de Decisiones**
-- Vincula lógicamente a los otros archivos
+Si los tres archivos **no existen**, está **prohibido** crearlos vacíos o inventar el proyecto.
 
----
+```bash
+bash init-tridente.sh                 # Unix / WSL / Git Bash
+bash init-tridente.sh --help          # modo no interactivo y banderas
+```
 
-## Regla de interconexión
+```powershell
+powershell -ExecutionPolicy Bypass -File init-tridente.ps1
+```
 
-Los 3 archivos son **un solo organismo**. No los trates como entidades aisladas:
+Sin terminal, haz la entrevista y puebla las plantillas de `templates/`:
 
-- Decisión de diseño en `plan_maestro.md` → reflejarla en `gemini.md`
-- Trampa técnica en implementación → cruzarla con `lecciones_aprendidas.md`
-- Cambio de stack → actualizar ADN + bitácora + lección si aplica
+1. ¿Cuál es el objetivo principal del proyecto?
+2. ¿Qué stack tecnológico vamos a utilizar?
+3. ¿Qué regla es innegociable en este proyecto?
+4. ¿Cuál es el primer hito o sprint?
 
----
+## Verificación
 
-## Instalación del skill
+```bash
+node scripts/validate.mjs     # puntaje 0–100 de salud del Tridente
+node scripts/sync.mjs --check # comprueba que la documentación no se desincronizó
+```
 
-| Plataforma | Ruta |
+## Instalación
+
+| Plataforma | Ruta de instalación |
 | :--- | :--- |
-| Cursor | `~/.cursor/skills/tridente-de-memoria/` o `~/.agents/skills/` |
-| Gemini CLI | `~/.gemini/config/skills/tridente-de-memoria/` |
-| Claude Code | `~/.claude/skills/tridente-de-memoria/` |
+| **Claude Code** | `~/.claude/skills/tridente-de-memoria` |
+| **Cursor** | `~/.cursor/skills/tridente-de-memoria` |
+| **Gemini CLI** | `~/.gemini/skills/tridente-de-memoria` |
+| **Genérico (AGENTS skills)** | `~/.agents/skills/tridente-de-memoria` |
+
+```bash
+git clone https://github.com/Cyberdark-Security/tridente-de-memoria-skill ~/.claude/skills/tridente-de-memoria
+```
+
+> El directorio de destino **debe** llamarse `tridente-de-memoria` para que coincida con el campo `name` del frontmatter.
 
 Repositorio: https://github.com/Cyberdark-Security/tridente-de-memoria-skill

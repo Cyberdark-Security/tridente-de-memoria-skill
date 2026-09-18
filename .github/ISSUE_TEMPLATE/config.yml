@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 🔒 Reportar una vulnerabilidad
+    url: https://github.com/Cyberdark-Security/tridente-de-memoria-skill/security/advisories/new
+    about: No abras un issue público para una vulnerabilidad. Usa un aviso privado.
+  - name: 💬 Preguntas y dudas de uso
+    url: https://github.com/Cyberdark-Security/tridente-de-memoria-skill/discussions
+    about: Para preguntas abiertas sobre cómo usar el Tridente.

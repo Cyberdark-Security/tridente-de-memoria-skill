@@ -1,0 +1,492 @@
+{
+  "$comment": "FUENTE ÚNICA DE VERDAD (SSOT) del Tridente de Memoria. NO editar los archivos derivados a mano: edita este spec y ejecuta `node scripts/sync.mjs`.",
+  "specVersion": 1,
+  "protocol": {
+    "id": "tridente-de-memoria",
+    "name": "Tridente de Memoria",
+    "nameEn": "Memory Trident",
+    "version": "2.5.1",
+    "repository": "https://github.com/Cyberdark-Security/tridente-de-memoria-skill",
+    "license": "MIT",
+    "authors": "Cyberdark / Whoami Labs",
+    "goldenRule": "NINGÚN CÓDIGO SE ESCRIBE SIN ANTES LEER EL TRIDENTE.",
+    "goldenRuleEn": "NO CODE IS WRITTEN WITHOUT READING THE TRIDENT FIRST."
+  },
+  "dateFormat": {
+    "id": "iso-8601",
+    "display": "YYYY-MM-DD",
+    "regex": "^\\d{4}-\\d{2}-\\d{2}$",
+    "example": "2026-09-17",
+    "rationale": "ISO 8601 es ordenable lexicográficamente y no ambiguo entre locales. DD/MM/AAAA rompe el orden de la bitácora y se confunde con MM/DD/AAAA."
+  },
+  "files": [
+    {
+      "id": "dna",
+      "filename": "gemini.md",
+      "aliases": [
+        "GEMINI.md",
+        "PROJECT_DNA.md",
+        "CLAUDE.md",
+        "AGENT_DNA.md"
+      ],
+      "emoji": "🧬",
+      "role": "El ADN",
+      "roleEn": "The DNA",
+      "index": 1,
+      "purpose": "Identidad, stack tecnológico, reglas innegociables y arquitectura del proyecto.",
+      "purposeEn": "Identity, tech stack, non-negotiable rules and project architecture.",
+      "extract": "Stack, reglas innegociables, arquitectura",
+      "extractEn": "Tech stack, non-negotiable rules, architecture",
+      "sections": [
+        {
+          "heading": "Identidad y Propósito",
+          "headingEn": "Identity and Purpose",
+          "emoji": "📋",
+          "required": true
+        },
+        {
+          "heading": "Stack Tecnológico",
+          "headingEn": "Tech Stack",
+          "emoji": "🛠️",
+          "required": true
+        },
+        {
+          "heading": "Reglas Innegociables",
+          "headingEn": "Non-Negotiable Rules",
+          "emoji": "📜",
+          "required": true
+        },
+        {
+          "heading": "Arquitectura y Estándares",
+          "headingEn": "Architecture and Standards",
+          "emoji": "🏗️",
+          "required": true
+        },
+        {
+          "heading": "Referencias cruzadas",
+          "headingEn": "Cross-references",
+          "emoji": "🔗",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "plan",
+      "filename": "plan_maestro.md",
+      "aliases": [
+        "PLAN_MAESTRO.md",
+        "MASTER_PLAN.md"
+      ],
+      "emoji": "🗺️",
+      "role": "La Brújula",
+      "roleEn": "The Compass",
+      "index": 2,
+      "purpose": "Roadmap, hito actual, sprint activo, backlog y bitácora de decisiones.",
+      "purposeEn": "Roadmap, current milestone, active sprint, backlog and decision log.",
+      "extract": "Hito actual, tareas activas, bitácora de decisiones",
+      "extractEn": "Current milestone, active tasks, decision log",
+      "sections": [
+        {
+          "heading": "Próximo Hito",
+          "headingEn": "Next Milestone",
+          "emoji": "🎯",
+          "required": true
+        },
+        {
+          "heading": "Sprint Activo",
+          "headingEn": "Active Sprint",
+          "emoji": "🏃",
+          "required": true
+        },
+        {
+          "heading": "Backlog",
+          "headingEn": "Backlog",
+          "emoji": "📝",
+          "required": true
+        },
+        {
+          "heading": "Bitácora de Decisiones",
+          "headingEn": "Decision Log",
+          "emoji": "📓",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "lessons",
+      "filename": "lecciones_aprendidas.md",
+      "aliases": [
+        "LECCIONES_APRENDIDAS.md",
+        "LESSONS_LEARNED.md"
+      ],
+      "emoji": "🛡️",
+      "role": "El Escudo",
+      "roleEn": "The Shield",
+      "index": 3,
+      "purpose": "Minas activas, bugs históricos y trampas técnicas ya pagadas.",
+      "purposeEn": "Active mines, historical bugs and technical traps already paid for.",
+      "extract": "Minas activas, bugs conocidos, lecciones pasadas",
+      "extractEn": "Active mines, known bugs, past lessons",
+      "sections": [
+        {
+          "heading": "Minas Activas",
+          "headingEn": "Active Mines",
+          "emoji": "⚠️",
+          "required": true
+        },
+        {
+          "heading": "Conocimiento Adquirido",
+          "headingEn": "Acquired Knowledge",
+          "emoji": "🧠",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "readOrder": [
+    "dna",
+    "plan",
+    "lessons"
+  ],
+  "writeOrder": [
+    "lessons",
+    "dna",
+    "plan"
+  ],
+  "writeOrderRationale": "Primero la lección (el dolor se documenta caliente), luego la regla global si cambió, y al final el plan (que referencia a ambos). Al revés, el plan apuntaría a entradas que todavía no existen.",
+  "entries": {
+    "decision": {
+      "file": "plan",
+      "section": "Bitácora de Decisiones",
+      "headingTemplate": "### {date} — {title}",
+      "fields": [
+        {
+          "key": "Decisión",
+          "keyEn": "Decision",
+          "hint": "Qué se decidió",
+          "hintEn": "What was decided",
+          "required": true
+        },
+        {
+          "key": "Razón",
+          "keyEn": "Reason",
+          "hint": "Por qué",
+          "hintEn": "Why",
+          "required": true
+        },
+        {
+          "key": "Impacto",
+          "keyEn": "Impact",
+          "hint": "Qué partes del sistema se ven afectadas",
+          "hintEn": "Which parts of the system are affected",
+          "required": true
+        },
+        {
+          "key": "Relacionado",
+          "keyEn": "Related",
+          "hint": "Enlace a la lección o al cambio en {dna}, si aplica",
+          "hintEn": "Link to the lesson or {dna} change, if any",
+          "required": false
+        }
+      ]
+    },
+    "lesson": {
+      "file": "lessons",
+      "section": "Conocimiento Adquirido",
+      "headingTemplate": "### {date} — {title}",
+      "fields": [
+        {
+          "key": "Problema",
+          "keyEn": "Problem",
+          "hint": "Qué falló",
+          "hintEn": "What failed",
+          "required": true
+        },
+        {
+          "key": "Solución",
+          "keyEn": "Solution",
+          "hint": "Cómo se resolvió",
+          "hintEn": "How it was fixed",
+          "required": true
+        },
+        {
+          "key": "Prevención",
+          "keyEn": "Prevention",
+          "hint": "Cómo evitar que vuelva a pasar",
+          "hintEn": "How to stop it happening again",
+          "required": true
+        },
+        {
+          "key": "Impacto en reglas",
+          "keyEn": "Rule impact",
+          "hint": "¿Requiere cambio en {dna}? Sí/No",
+          "hintEn": "Does it require a {dna} change? Yes/No",
+          "required": true
+        }
+      ]
+    },
+    "mine": {
+      "file": "lessons",
+      "section": "Minas Activas",
+      "table": {
+        "columns": [
+          "Componente",
+          "Descripción",
+          "Estado"
+        ],
+        "columnsEn": [
+          "Component",
+          "Description",
+          "Status"
+        ],
+        "states": [
+          {
+            "emoji": "🔴",
+            "label": "Activa",
+            "labelEn": "Active",
+            "meaning": "Rompe cosas hoy"
+          },
+          {
+            "emoji": "🟡",
+            "label": "Vigilar",
+            "labelEn": "Watch",
+            "meaning": "Frágil, no tocar sin leer"
+          },
+          {
+            "emoji": "🟢",
+            "label": "Limpio",
+            "labelEn": "Clear",
+            "meaning": "Resuelta, se deja como historia"
+          }
+        ]
+      }
+    }
+  },
+  "init": {
+    "$comment": "Tokens que los scripts init-tridente.* sustituyen en templates/*.md. Los scripts NO contienen el texto de las plantillas: lo leen de templates/, así no pueden desincronizarse.",
+    "tokens": [
+      {
+        "token": "{{PROJECT_NAME}}",
+        "question": null,
+        "default": "@dirname",
+        "files": [
+          "dna",
+          "plan",
+          "lessons"
+        ]
+      },
+      {
+        "token": "{{DATE}}",
+        "question": null,
+        "default": "@today",
+        "files": [
+          "plan",
+          "lessons"
+        ]
+      },
+      {
+        "token": "{{GOAL}}",
+        "question": "¿Cuál es el objetivo principal del proyecto?",
+        "hint": "Ej: API de pagos con conciliación automática",
+        "files": [
+          "dna"
+        ]
+      },
+      {
+        "token": "{{STACK}}",
+        "question": "¿Qué stack tecnológico vamos a utilizar?",
+        "hint": "Ej: React + Node.js + PostgreSQL + Vercel",
+        "files": [
+          "dna"
+        ]
+      },
+      {
+        "token": "{{RULES}}",
+        "question": "¿Qué regla es innegociable en este proyecto?",
+        "hint": "Ej: TypeScript estricto, sin dependencias nuevas sin aprobación",
+        "files": [
+          "dna"
+        ]
+      },
+      {
+        "token": "{{MILESTONE}}",
+        "question": "¿Cuál es el primer hito o sprint?",
+        "hint": "Ej: MVP con login y CRUD de usuarios",
+        "files": [
+          "plan"
+        ]
+      }
+    ]
+  },
+  "adapters": [
+    {
+      "tool": "OpenAI Codex",
+      "path": "AGENTS.md",
+      "kind": "native",
+      "note": "Lee AGENTS.md de forma nativa. No requiere adaptador.",
+      "key": "agents"
+    },
+    {
+      "tool": "Cursor",
+      "path": ".cursor/rules/tridente.mdc",
+      "kind": "mdc",
+      "note": "Regla siempre activa que reenvía a AGENTS.md.",
+      "key": "cursor"
+    },
+    {
+      "tool": "Claude Code",
+      "path": "CLAUDE.md",
+      "kind": "import",
+      "note": "Usa la sintaxis de import @AGENTS.md.",
+      "key": "claude"
+    },
+    {
+      "tool": "Gemini CLI / Antigravity",
+      "path": ".gemini/settings.json",
+      "kind": "json-context",
+      "note": "Emite el esquema anidado actual (context.fileName) y la clave plana heredada (contextFileName) para versiones antiguas. NO se genera GEMINI.md en la raíz: colisionaría con {dna} (el ADN) en sistemas de archivos insensibles a mayúsculas (Windows, macOS).",
+      "key": "gemini"
+    },
+    {
+      "tool": "GitHub Copilot",
+      "path": ".github/copilot-instructions.md",
+      "kind": "import",
+      "note": "Instrucciones de repositorio para Copilot Chat y Coding Agent; importa AGENTS.md con @.",
+      "key": "copilot"
+    },
+    {
+      "tool": "Windsurf",
+      "path": ".windsurfrules",
+      "kind": "markdown",
+      "note": "Formato heredado, aún soportado. Windsurf pasó a Devin Desktop; la ruta actual es .devin/rules/.",
+      "key": "windsurf"
+    },
+    {
+      "tool": "Roo Code",
+      "path": ".roo/rules/tridente.md",
+      "kind": "markdown",
+      "note": "Reglas de modo por proyecto.",
+      "key": "roo"
+    },
+    {
+      "tool": "JetBrains Junie",
+      "path": ".junie/guidelines.md",
+      "kind": "markdown",
+      "note": "Guidelines del proyecto para Junie.",
+      "key": "junie"
+    },
+    {
+      "tool": "Amazon Q Developer",
+      "path": ".amazonq/rules/tridente.md",
+      "kind": "markdown",
+      "note": "Reglas de proyecto.",
+      "key": "amazonq"
+    },
+    {
+      "tool": "Firebase Studio / Project IDX",
+      "path": ".idx/airules.md",
+      "kind": "markdown",
+      "note": "Firebase Studio / Project IDX. El producto está en sunset; se mantiene por compatibilidad.",
+      "key": "idx"
+    },
+    {
+      "tool": "Aider",
+      "path": "CONVENTIONS.md",
+      "kind": "markdown",
+      "note": "Aider NO lo carga solo: requiere `aider --read CONVENTIONS.md` o `read: CONVENTIONS.md` en .aider.conf.yml.",
+      "key": "aider",
+      "manual": "requiere `aider --read CONVENTIONS.md` o `read:` en `.aider.conf.yml`",
+      "manualEn": "needs `aider --read CONVENTIONS.md` or `read:` in `.aider.conf.yml`"
+    },
+    {
+      "tool": "Jules / Devin / OpenHands y otros",
+      "path": "AGENTS.md",
+      "kind": "native",
+      "note": "Leen AGENTS.md de la raíz del proyecto. (El chat de consumo de ChatGPT no lee archivos del repositorio; Codex sí.)",
+      "key": "agents"
+    },
+    {
+      "tool": "Devin Desktop (ex-Windsurf)",
+      "path": ".devin/rules/tridente.md",
+      "kind": "markdown",
+      "note": "Ruta actual tras el renombrado de Windsurf a Devin Desktop.",
+      "key": "devin"
+    },
+    {
+      "tool": "Cline",
+      "path": ".clinerules/tridente.md",
+      "kind": "markdown",
+      "note": "Formato de directorio, el recomendado actualmente. No puede coexistir con el archivo .clinerules heredado: en un sistema de archivos, .clinerules es fichero o directorio, no ambos.",
+      "key": "cline"
+    }
+  ],
+  "skillInstallPaths": [
+    {
+      "platform": "Claude Code",
+      "path": "~/.claude/skills/tridente-de-memoria"
+    },
+    {
+      "platform": "Cursor",
+      "path": "~/.cursor/skills/tridente-de-memoria"
+    },
+    {
+      "platform": "Gemini CLI",
+      "path": "~/.gemini/skills/tridente-de-memoria"
+    },
+    {
+      "platform": "Genérico (AGENTS skills)",
+      "path": "~/.agents/skills/tridente-de-memoria"
+    }
+  ],
+  "generated": [
+    "AGENTS.md",
+    "docs/AGENTS.en.md",
+    "SKILL.md",
+    "templates/gemini.md",
+    "templates/plan_maestro.md",
+    "templates/lecciones_aprendidas.md",
+    "templates/README.md",
+    "CLAUDE.md",
+    "CONVENTIONS.md",
+    ".windsurfrules",
+    ".cursor/rules/tridente.mdc",
+    ".gemini/settings.json",
+    ".github/copilot-instructions.md",
+    ".roo/rules/tridente.md",
+    ".junie/guidelines.md",
+    ".amazonq/rules/tridente.md",
+    ".idx/airules.md",
+    "dist/AGENTS.md",
+    "protocol/manifest.sh",
+    "protocol/manifest.ps1",
+    ".devin/rules/tridente.md",
+    ".clinerules/tridente.md"
+  ],
+  "injectedBlocks": {
+    "README.md": [
+      "trident-table",
+      "trident-graph",
+      "trident-cards",
+      "read-order",
+      "write-order",
+      "date-format",
+      "quickstart-result",
+      "install-table",
+      "compat-table",
+      "gemini-note"
+    ],
+    "README_EN.md": [
+      "trident-table-en",
+      "trident-graph-en",
+      "trident-cards-en",
+      "write-order-en",
+      "date-format-en",
+      "install-table-en",
+      "compat-table-en",
+      "gemini-note-en"
+    ],
+    "SECURITY.md": [
+      "security-files"
+    ]
+  }
+}
