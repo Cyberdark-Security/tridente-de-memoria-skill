@@ -73,7 +73,13 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
 # La consola de Windows necesita esto para no romper acentos ni emojis.
-try { [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false) } catch { }
+try {
+    [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
+} catch {
+    # Consola sin soporte UTF-8 (redirigida, o un host que no lo permite).
+    # No es motivo para abortar: sólo se veran peor los acentos.
+    Write-Verbose "No se pudo fijar UTF-8 en la consola: $_"
+}
 
 $ScriptDir = Split-Path -Parent $PSCommandPath
 $TemplateDir = Join-Path $ScriptDir 'templates'
@@ -96,11 +102,20 @@ if ($Version) { Write-Output $TridenteVersion; exit 0 }
 
 # ------------------------------------------------------------------ utilidades
 
+# Estos parametros los leen funciones definidas mas abajo. Elevarlos a ambito
+# de script hace visible ese uso, para el lector y para el analizador.
 $script:UseColor = (-not $NoColor) -and (-not $env:NO_COLOR)
+$script:Quiet = [bool]$Quiet
+$script:NoBackup = [bool]$NoBackup
 
 function Say {
+    # Write-Host es lo correcto aqui: esto es una interfaz de linea de comandos
+    # y la salida es para la persona, no para la tuberia. Write-Output
+    # contaminaria el valor de retorno de quien llame al script.
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '',
+        Justification = 'Salida interactiva para el usuario, no para la tuberia.')]
     param([string]$Text = '', [string]$Color = 'Gray')
-    if ($Quiet) { return }
+    if ($script:Quiet) { return }
     if ($script:UseColor) { Write-Host $Text -ForegroundColor $Color } else { Write-Host $Text }
 }
 
@@ -116,7 +131,7 @@ function Write-Utf8NoBom {
 }
 
 # Quita la cabecera "archivo generado": solo tiene sentido en este repositorio.
-function Remove-GeneratedHeader {
+function Get-TextWithoutGeneratedHeader {
     param([Parameter(Mandatory)][AllowEmptyString()][string]$Text)
     $out = [regex]::Replace(
         $Text,
@@ -267,7 +282,7 @@ foreach ($t in $TridenteTokens) {
 
 function Backup-IfNeeded {
     param([string]$Path)
-    if ($NoBackup) { return }
+    if ($script:NoBackup) { return }
     if (-not (Test-Path -LiteralPath $Path)) { return }
     Copy-Item -LiteralPath $Path -Destination "$Path.bak" -Force
     Say ("  ~ " + (Split-Path -Leaf $Path) + ".bak (copia de seguridad)") 'DarkGray'
@@ -287,7 +302,7 @@ foreach ($file in $TridenteMasters) {
         # interpreta como expresion regular.
         $text = $text.Replace($key, [string]$tokens[$key])
     }
-    $text = Remove-GeneratedHeader $text
+    $text = Get-TextWithoutGeneratedHeader $text
     Write-Utf8NoBom -Path $dst -Content $text
     $created.Add($file) | Out-Null
     Say "  OK $file" 'Green'
@@ -304,6 +319,8 @@ if ($leftover.Count -gt 0) { Fail ("Quedaron tokens sin sustituir en: " + ($left
 # Fusiona el contexto del Tridente con la configuracion de Gemini que ya
 # tuviera el proyecto (mcpServers, tema, auth...), en vez de pisarla.
 function Merge-GeminiSettings {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '',
+        Justification = 'El sustantivo refleja el nombre real del archivo: settings.json.')]
     param([string]$Src, [string]$Dst)
     if (-not (Test-Path -LiteralPath $Dst)) {
         Copy-Item -LiteralPath $Src -Destination $Dst -Force
@@ -355,7 +372,7 @@ function Copy-Adapter {
     } elseif ($Rel -like '*.json') {
         Copy-Item -LiteralPath $src -Destination $dst -Force
     } else {
-        Write-Utf8NoBom -Path $dst -Content (Remove-GeneratedHeader ([System.IO.File]::ReadAllText($src)))
+        Write-Utf8NoBom -Path $dst -Content (Get-TextWithoutGeneratedHeader ([System.IO.File]::ReadAllText($src)))
     }
     $script:created.Add($Rel) | Out-Null
     Say "  OK $Rel" 'Green'
