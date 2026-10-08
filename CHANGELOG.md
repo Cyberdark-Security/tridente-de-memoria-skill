@@ -5,19 +5,75 @@ Este proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
 Fechas en `YYYY-MM-DD` (ISO 8601), igual que los archivos maestros del Tridente.
 
-## [2.5.1] — 2026-09-17
+## [3.0.0] — 2026-10-08
 
-Remate de la sexta ronda de auditoría.
+**El Tridente vuelve a ser tres archivos.**
+
+La v2 construyó, alrededor de un protocolo de 290 líneas, un andamiaje de 5.500:
+una fuente única de verdad en JSON, un generador, un validador con puntaje,
+catorce punteros de herramienta, dos instaladores y 1.475 líneas de pruebas que
+probaban sobre todo al generador. El andamiaje existía para mantener coherentes
+a los veinte archivos que él mismo producía, y ahí nacieron los errores: la
+colisión entre `CLAUDE.md` como alias del ADN y `CLAUDE.md` como puntero
+generado es el ejemplo exacto.
+
+Esta versión borra el andamiaje entero. El protocolo no cambia.
+
+### Eliminado
+
+- `protocol/` — el spec, los dos manifiestos.
+- `scripts/` — `sync.mjs`, `validate.mjs`, `scan-secrets.mjs`.
+- `tests/` y el workflow de CI que los ejecutaba.
+- `init-tridente.sh` e `init-tridente.ps1`. La Fase Cero la hace el agente, que
+  ya está en la conversación: cuatro preguntas y escribe los tres archivos.
+- Once punteros de herramienta: Cursor, Copilot, Windsurf, Roo, Junie, Amazon Q,
+  IDX, Aider, Devin, Cline y Gemini. Todas esas herramientas leen `AGENTS.md`, o
+  les basta una línea que lo cite, documentada en la tabla de compatibilidad.
+- `dist/`, `package.json` y `templates/README.md`.
+- El papeleo sin lectores: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, las
+  plantillas de issue y de PR, y `.editorconfig`. La única regla que valía la
+  pena de `CONTRIBUTING.md` —*¿esto lo necesita quien usa el Tridente o sólo
+  quien lo mantiene?*— vive ahora en los dos README.
+- `SKILL.md` deja de resumir el protocolo y sólo remite a `AGENTS.md`. Un
+  resumen es una segunda copia, y la segunda copia es la que se queda atrás.
+
+### Añadido
+
+- `EJEMPLO.md` — un proyecto imaginario con los tres archivos ya vividos, para
+  ver el resultado antes de instalar nada.
+- Instalación de una sola frase: se le pasa a la IA el enlace crudo de
+  `AGENTS.md` y ella copia el archivo y hace la Fase Cero. El protocolo abre con
+  la instrucción de arranque que lo hace posible, y sus enlaces internos son
+  absolutos para que el archivo siga funcionando una vez copiado a otro proyecto.
+
+### Cambiado
+
+- `AGENTS.md` deja de ser un artefacto generado y pasa a ser **la fuente**. Es
+  además autosuficiente: lista las secciones obligatorias de cada archivo
+  maestro, así que un agente que sólo tenga ese archivo puede ejecutar la Fase
+  Cero sin plantillas ni scripts.
+- Las plantillas de `templates/` pierden la cabecera `GENERADO POR
+  scripts/sync.mjs — NO EDITAR A MANO`, que acababa copiada en el repositorio de
+  quien instalaba el Tridente.
+- `CLAUDE.md` deja de ser alias del ADN. Era a la vez alias y puntero generado:
+  un agente podía escribir el ADN ahí y el siguiente `sync` lo borraba sin dejar
+  copia. Es la misma colisión ya resuelta para `GEMINI.md`, pero esta no
+  dependía de las mayúsculas.
+- `SECURITY.md` pierde la sección sobre las garantías de los instaladores: ya no
+  hay nada que ejecutar.
 
 ### Corregido
 
-- El constructor del conjunto de marcadores no aplicaba la exclusión de enlaces
-  markdown que su propio comentario prometía y que su check hermano sí aplicaba:
-  colaba el texto de dos enlaces y la sintaxis  de un manifiesto de
-  PowerShell. Los marcadores sólo se extraen ya de artefactos markdown.
-- Una respuesta de dos letras distintas (, ) contaba como sección
-  vacía. El mínimo baja a 2 cuando hay dos letras distintas, lo que deja pasar
-   sin admitir  ni .
+- `CHANGELOG.md` tenía la entrada `[2.5.1]` duplicada, y en la primera copia el
+  código inline había desaparecido (`la sintaxis  de un manifiesto`). Se deja
+  una sola copia, la íntegra.
+
+### Migración
+
+Si tienes la v2 instalada: los tres archivos maestros no cambian, no hay que
+tocarlos. Borra del proyecto los punteros que ya no necesitas y conserva
+`AGENTS.md` y, si usas Claude Code, `CLAUDE.md`. No vuelvas a ejecutar
+`init-tridente`; ya no existe.
 
 ## [2.5.1] — 2026-09-17
 

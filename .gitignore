@@ -9,16 +9,9 @@ desktop.ini
 *.swp
 *~
 
-# Node (sólo tooling de desarrollo; el skill no tiene dependencias en runtime)
-node_modules/
-npm-debug.log*
-.npm/
-
-# Sesiones y temporales
-jules_session/
+# Temporales
 *.tmp
 *.bak
-.tridente-tmp/
 
 # Material que no pertenece a este repositorio.
 # GCP_Proyectos contiene un inventario de infraestructura interna: NO debe

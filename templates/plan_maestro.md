@@ -1,9 +1,5 @@
-<!-- tridente:header-start -->
-<!-- GENERADO POR scripts/sync.mjs — NO EDITAR A MANO.
-     Fuente de verdad: protocol/tridente.spec.json
-     Plantilla con tokens {{...}}: los rellenan init-tridente.sh / init-tridente.ps1.
-     Si la copias a mano, sustituye cada token por tu texto. -->
-<!-- tridente:header-end -->
+<!-- Plantilla del Tridente de Memoria. Sustituye cada {{TOKEN}} y cada [corchete]
+     por el contenido real de tu proyecto, y borra este comentario. -->
 
 # 🗺️ La Brújula: {{PROJECT_NAME}}
 

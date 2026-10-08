@@ -1,65 +1,66 @@
-<!-- tridente:header-start -->
-<!-- GENERADO POR scripts/sync.mjs — NO EDITAR A MANO.
-     Fuente de verdad: protocol/tridente.spec.json
-     Regenerar con: node scripts/sync.mjs -->
-<!-- tridente:header-end -->
+# Tridente de Memoria
 
-# Instrucciones para agentes de IA
+Protocolo de memoria persistente para agentes de IA (v3.0.0).
+Son **tres archivos markdown** en la raíz del proyecto. Nada más.
 
-Este proyecto opera bajo el protocolo **Tridente de Memoria** (v2.5.1).
-Tu misión: mantener el contexto completo del proyecto y no reintroducir errores ya resueltos.
+> **Regla de oro: ningún código se escribe sin antes leer el Tridente.**
 
-> **Regla de oro: NINGÚN CÓDIGO SE ESCRIBE SIN ANTES LEER EL TRIDENTE.**
+> **¿Te acaban de pasar el enlace de este archivo para instalarlo?** Entonces tu
+> tarea es: copiar este archivo tal cual como `AGENTS.md` en la raíz del
+> proyecto, y seguir la **Fase Cero** (sección 5). Nada más que instalar.
 
-> 🇬🇧 English version: [`docs/AGENTS.en.md`](docs/AGENTS.en.md)
+🇬🇧 English: [AGENTS.en.md](https://github.com/Cyberdark-Security/tridente-de-memoria-skill/blob/main/docs/AGENTS.en.md)
 
 ---
 
-## 1. Los tres archivos maestros
+## 1. Los tres archivos
 
 | Archivo | Rol | Contenido |
 | :--- | :--- | :--- |
-| `gemini.md` | 🧬 El ADN | Identidad, stack tecnológico, reglas innegociables y arquitectura del proyecto. |
+| `gemini.md` | 🧬 El ADN | Identidad, stack tecnológico, reglas innegociables y arquitectura. |
 | `plan_maestro.md` | 🗺️ La Brújula | Roadmap, hito actual, sprint activo, backlog y bitácora de decisiones. |
 | `lecciones_aprendidas.md` | 🛡️ El Escudo | Minas activas, bugs históricos y trampas técnicas ya pagadas. |
 
-Los nombres son canónicos. Si un proyecto ya usa alias (`GEMINI.md`, `PROJECT_DNA.md`, `CLAUDE.md`, `AGENT_DNA.md`…), identifícalos **por su función**, no sólo por el nombre.
+Si el proyecto ya usa otros nombres (`PROJECT_DNA.md`, `MASTER_PLAN.md`,
+`LESSONS_LEARNED.md`…), identifícalos **por su función**, no por el nombre.
+
+> `CLAUDE.md` no es uno de ellos: es el puntero que lleva a este archivo.
 
 ---
 
 ## 2. Antes de escribir código — LEER
 
-Lee los tres archivos en este orden y no empieces hasta terminarlos:
+En este orden, y no empieces hasta terminarlos:
 
-| # | Archivo | Qué extraer |
-| :---: | :--- | :--- |
-| 1 | `gemini.md` | Stack, reglas innegociables, arquitectura |
-| 2 | `plan_maestro.md` | Hito actual, tareas activas, bitácora de decisiones |
-| 3 | `lecciones_aprendidas.md` | Minas activas, bugs conocidos, lecciones pasadas |
+1. `gemini.md` → stack, reglas innegociables, arquitectura.
+2. `plan_maestro.md` → hito actual, tareas activas, bitácora de decisiones.
+3. `lecciones_aprendidas.md` → minas activas, bugs conocidos, lecciones pasadas.
 
-- Si **falta alguno** → detente y ejecuta la **Fase Cero** (sección 5). No inventes el contenido.
-- Si el contenido **contradice** lo que te pide el usuario → dilo antes de programar, no después.
-- Si un requisito es **ambiguo** → pregunta. No asumas.
+- ¿Falta alguno? → **Fase Cero** (sección 5). No inventes el contenido.
+- ¿El contenido contradice lo que te piden? → dilo **antes** de programar.
+- ¿Un requisito es ambiguo? → pregunta. No asumas.
 
 ---
 
 ## 3. Durante la tarea
 
-- **Bug o trampa descubierta** → anótala; irá a `lecciones_aprendidas.md` al cerrar.
-- **Decisión de arquitectura** → anótala; irá a la Bitácora de `plan_maestro.md`.
-- **No** edites los archivos maestros a mitad de tarea salvo que la tarea sea precisamente esa.
+- Bug o trampa descubierta → anótala; irá a `lecciones_aprendidas.md` al cerrar.
+- Decisión de arquitectura → anótala; irá a la bitácora de `plan_maestro.md`.
+- No edites los tres archivos a mitad de tarea, salvo que la tarea sea esa.
 
 ---
 
 ## 4. Al terminar — ESCRIBIR en el orden sagrado
 
-1. **`lecciones_aprendidas.md`** — Minas activas, bugs históricos y trampas técnicas ya pagadas.
-2. **`gemini.md`** — Identidad, stack tecnológico, reglas innegociables y arquitectura del proyecto.
-3. **`plan_maestro.md`** — Roadmap, hito actual, sprint activo, backlog y bitácora de decisiones.
+1. `lecciones_aprendidas.md`
+2. `gemini.md` (sólo si cambió una regla global)
+3. `plan_maestro.md`
 
-> Primero la lección (el dolor se documenta caliente), luego la regla global si cambió, y al final el plan (que referencia a ambos). Al revés, el plan apuntaría a entradas que todavía no existen.
+Primero la lección, porque el dolor se documenta en caliente. Después la regla.
+El plan al final, porque referencia a los otros dos: al revés apuntaría a
+entradas que todavía no existen.
 
-### Formato de lección (`lecciones_aprendidas.md` → Conocimiento Adquirido)
+### Lección → `lecciones_aprendidas.md`, sección *Conocimiento Adquirido*
 
 ```markdown
 ### YYYY-MM-DD — [Título]
@@ -69,93 +70,82 @@ Lee los tres archivos en este orden y no empieces hasta terminarlos:
 - **Impacto en reglas:** [¿Requiere cambio en gemini.md? Sí/No]
 ```
 
-### Formato de decisión (`plan_maestro.md` → Bitácora de Decisiones)
+### Mina activa → `lecciones_aprendidas.md`, sección *Minas Activas*
+
+| Componente | Descripción | Estado |
+| :--- | :--- | :--- |
+| [Componente] | [Qué rompe y cuándo] | 🔴 Activa / 🟡 Vigilar / 🟢 Limpio |
+
+🔴 rompe cosas hoy · 🟡 frágil, no tocar sin leer · 🟢 resuelta, se deja como historia.
+
+### Decisión → `plan_maestro.md`, sección *Bitácora de Decisiones*
 
 ```markdown
 ### YYYY-MM-DD — [Título]
 - **Decisión:** [Qué se decidió]
 - **Razón:** [Por qué]
 - **Impacto:** [Qué partes del sistema se ven afectadas]
-- **Relacionado:** [Enlace a la lección o al cambio en gemini.md, si aplica] *(opcional)*
+- **Relacionado:** [Enlace a la lección o al cambio en gemini.md] *(opcional)*
 ```
 
-### Formato de mina activa (`lecciones_aprendidas.md` → Minas Activas)
+### Fechas
 
-| Componente | Descripción | Estado |
-| :--- | :--- | :--- |
-| [Componente] | [Qué rompe y cuándo] | 🔴 Activa / 🟡 Vigilar / 🟢 Limpio |
-
-- 🔴 **Activa** — Rompe cosas hoy
-- 🟡 **Vigilar** — Frágil, no tocar sin leer
-- 🟢 **Limpio** — Resuelta, se deja como historia
-
-### Formato de fecha — obligatorio
-
-Todas las fechas usan **YYYY-MM-DD** (ISO 8601). Ejemplo: `2026-09-17`.
-ISO 8601 es ordenable lexicográficamente y no ambiguo entre locales. DD/MM/AAAA rompe el orden de la bitácora y se confunde con MM/DD/AAAA.
+Siempre **YYYY-MM-DD** (ISO 8601). Ejemplo: `2026-10-08`.
+Es ordenable alfabéticamente y no se confunde entre locales; `08/10/2026` sí.
 
 ---
 
-## 5. Fase Cero (inicialización)
+## 5. Fase Cero — cuando los archivos no existen
 
-Cuando el usuario pide *"instala el Tridente"* / *"inicia un proyecto con el Tridente"* y los archivos no existen:
+Haz estas cuatro preguntas, **una por una**, y espera cada respuesta:
 
-1. **Con terminal** → `bash init-tridente.sh` (Unix/WSL/Git Bash) o `powershell -ExecutionPolicy Bypass -File init-tridente.ps1` (Windows).
-2. **Sin terminal** → haz estas preguntas, una por una, y espera la respuesta:
-   1. ¿Cuál es el objetivo principal del proyecto?
-   2. ¿Qué stack tecnológico vamos a utilizar?
-   3. ¿Qué regla es innegociable en este proyecto?
-   4. ¿Cuál es el primer hito o sprint?
-   Después crea los tres archivos a partir de `templates/`, sustituyendo cada token `{{...}}`.
-3. **Nunca** crees archivos vacíos ni inventes datos del proyecto.
+1. ¿Cuál es el objetivo principal del proyecto?
+2. ¿Qué stack tecnológico vamos a utilizar?
+3. ¿Qué regla es innegociable en este proyecto?
+4. ¿Cuál es el primer hito o sprint?
 
-Al terminar, deja `AGENTS.md` en la raíz del proyecto.
+Con las respuestas, crea los tres archivos en la raíz del proyecto. Basta con
+estas secciones ([las plantillas completas están en el repositorio](https://github.com/Cyberdark-Security/tridente-de-memoria-skill/tree/main/templates)):
+
+| Archivo | Secciones obligatorias |
+| :--- | :--- |
+| `gemini.md` | Identidad y Propósito · Stack Tecnológico · Reglas Innegociables · Arquitectura y Estándares |
+| `plan_maestro.md` | Próximo Hito · Sprint Activo · Backlog · Bitácora de Decisiones |
+| `lecciones_aprendidas.md` | Minas Activas · Conocimiento Adquirido |
+
+Cada archivo abre con un enlace a los otros dos. Las secciones que todavía no
+tengan contenido real se dejan marcadas como pendientes.
+
+**Nunca** crees los archivos vacíos ni rellenes huecos inventando el proyecto.
+Un Tridente con datos falsos es peor que no tenerlo: el agente los creerá.
 
 ---
 
-## 6. Regla de interconexión
-
-Los tres archivos son **un solo organismo**, no tres documentos sueltos:
+## 6. Son un solo organismo
 
 - Decisión de diseño en `plan_maestro.md` → refléjala en `gemini.md`.
 - Trampa técnica al implementar → crúzala en `lecciones_aprendidas.md`.
-- Cambio de stack → ADN + bitácora + lección (si aplica).
+- Cambio de stack → ADN + bitácora + lección, si aplica.
 
-Una entrada que no enlaza con las otras dos es una entrada huérfana: **el tridente se desincroniza justo ahí**.
-
----
-
-## 7. Verificación
-
-Antes de dar por cerrada una tarea que tocó los archivos maestros:
-
-```bash
-node scripts/validate.mjs
-```
-
-El validador comprueba nombres, secciones, orden, formato de fecha y enlaces cruzados, y devuelve un puntaje 0–100.
+Una entrada que no enlaza con las otras dos es una entrada huérfana, y el
+Tridente se desincroniza justo ahí.
 
 ---
 
-## 8. Compatibilidad entre herramientas
+## 7. Compatibilidad
 
-`AGENTS.md` es la **única fuente** de estas instrucciones. El resto de archivos de configuración de agentes son punteros generados que reenvían aquí.
+`AGENTS.md` es el estándar que leen hoy la mayoría de agentes —Codex, Cursor,
+Copilot, Jules, Devin, OpenHands, Antigravity— sin configuración.
 
-| Herramienta | Archivo que lee | Mecanismo |
+Para las herramientas que leen otro archivo, el puntero es de una línea y
+reenvía aquí; nunca copies el protocolo, porque la copia se desincroniza:
+
+| Herramienta | Archivo | Contenido del puntero |
 | :--- | :--- | :--- |
-| OpenAI Codex | `AGENTS.md` | Nativo |
-| Cursor | `.cursor/rules/tridente.mdc` | Adaptador generado |
-| Claude Code | `CLAUDE.md` | Adaptador generado |
-| Gemini CLI / Antigravity | `.gemini/settings.json` | Adaptador generado |
-| GitHub Copilot | `.github/copilot-instructions.md` | Adaptador generado |
-| Windsurf | `.windsurfrules` | Adaptador generado |
-| Roo Code | `.roo/rules/tridente.md` | Adaptador generado |
-| JetBrains Junie | `.junie/guidelines.md` | Adaptador generado |
-| Amazon Q Developer | `.amazonq/rules/tridente.md` | Adaptador generado |
-| Firebase Studio / Project IDX | `.idx/airules.md` | Adaptador generado |
-| Aider | `CONVENTIONS.md` | Adaptador generado — requiere `aider --read CONVENTIONS.md` o `read:` en `.aider.conf.yml` |
-| Jules / Devin / OpenHands y otros | `AGENTS.md` | Nativo |
-| Devin Desktop (ex-Windsurf) | `.devin/rules/tridente.md` | Adaptador generado |
-| Cline | `.clinerules/tridente.md` | Adaptador generado |
+| Claude Code | `CLAUDE.md` | `@AGENTS.md` |
+| Gemini CLI | `.gemini/settings.json` | `{ "context": { "fileName": ["AGENTS.md", "gemini.md"] } }` |
+| Cualquier otra | donde la espere | una línea que remita a `AGENTS.md` |
 
-**No edites los punteros a mano.** Edita `protocol/tridente.spec.json` y ejecuta `node scripts/sync.mjs`.
+> No crees `GEMINI.md` en la raíz. En Windows y macOS el sistema de archivos no
+> distingue mayúsculas, así que `GEMINI.md` y `gemini.md` (el ADN) serían **el
+> mismo archivo** y el puntero se comería el ADN.

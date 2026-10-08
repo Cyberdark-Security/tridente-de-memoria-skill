@@ -1,17 +1,10 @@
-# Normalización de fin de línea. Sin esto, un clon en Windows convierte los
-# scripts .sh a CRLF y dejan de ejecutarse ("bad interpreter: /usr/bin/env^M").
+# Normalización de fin de línea: el repositorio es markdown y se lee igual en
+# todas las plataformas.
 * text=auto eol=lf
 
-*.sh      text eol=lf
-*.mjs     text eol=lf
-*.js      text eol=lf
-*.json    text eol=lf
 *.md      text eol=lf
 *.yml     text eol=lf
-*.yaml    text eol=lf
-
-# PowerShell necesita CRLF + BOM UTF-8 para Windows PowerShell 5.1.
-*.ps1     text eol=crlf working-tree-encoding=UTF-8
+*.json    text eol=lf
 
 # Binarios: nunca tocar.
 *.png     binary
@@ -19,6 +12,6 @@
 *.gif     binary
 *.ico     binary
 
-# Excluir del tarball de release y de las estadísticas de lenguaje.
+# Excluir de las estadísticas de lenguaje.
 banner.png       linguist-documentation
 templates/*.md   linguist-documentation
